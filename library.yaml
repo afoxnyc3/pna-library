@@ -3,13 +3,273 @@ default_dirs:
     - default: .claude/skills/
     - global: ~/.claude/skills/
   agents:
-    - default: .claude/agents/
-    - global: ~/.claude/agents/
+    - default: .claudeclaw/agents/
+    - global: ~/.claudeclaw/agents/
   prompts:
     - default: .claude/commands/
     - global: ~/.claude/commands/
 
 library:
-  skills: []
-  agents: []
-  prompts: []
+
+  skills:
+
+    # ── Research & Analysis ──────────────────────────────────────────────────
+    - name: deep-research
+      description: Thorough source-heavy research brief with citations. Triggers on "deep research", "investigate", "research brief".
+      source: ~/dev/projects/rnd/skills/feynman/deep-research/skill.md
+
+    - name: source-comparison
+      description: Grounded comparison matrix across tools, papers, frameworks, or approaches.
+      source: ~/dev/projects/rnd/skills/feynman/source-comparison/skill.md
+
+    - name: literature-review
+      description: Comprehensive academic literature review with synthesis and consensus mapping.
+      source: ~/dev/projects/rnd/skills/feynman/literature-review/skill.md
+
+    - name: novelty-check
+      description: Verify whether a research idea or approach is genuinely novel against recent literature.
+      source: ~/dev/projects/rnd/skills/aris/novelty-check/skill.md
+
+    - name: peer-review
+      description: Simulate tough peer review of any research artifact — paper, draft, proposal, report.
+      source: ~/dev/projects/rnd/skills/feynman/peer-review/skill.md
+
+    - name: idea-refine
+      description: Refine ideas through structured divergent and convergent thinking.
+      source: ~/dev/external/agent-skills/skills/idea-refine/SKILL.md
+
+    - name: eli5
+      description: Explain research papers or technical concepts in plain English with concrete analogies.
+      source: ~/dev/projects/rnd/skills/feynman/eli5/skill.md
+
+    - name: alpha-research
+      description: Search, read, and query academic research papers via the alpha CLI.
+      source: ~/dev/projects/rnd/skills/feynman/alpha-research/skill.md
+
+    - name: research-wiki
+      description: Persistent research knowledge base. Karpathy LLM Wiki pattern — compile once, keep current.
+      source: ~/dev/projects/rnd/skills/aris/research-wiki/skill.md
+
+    - name: research-refine
+      description: Turn a vague research direction into a concrete, problem-anchored implementation-ready plan.
+      source: ~/dev/projects/rnd/skills/aris/research-refine/skill.md
+
+    # ── Web & Content ────────────────────────────────────────────────────────
+    - name: defuddle
+      description: Extract clean markdown from web pages using the Defuddle CLI, removing clutter.
+      source: ~/.claude/skills/defuddle/skill.md
+
+    - name: jobs
+      description: Inspect active background research — running processes, scheduled tasks, pending missions.
+      source: ~/dev/projects/rnd/skills/feynman/jobs/skill.md
+
+    - name: watch
+      description: Set up a recurring research watch on a topic, company, or paper area.
+      source: ~/dev/projects/rnd/skills/feynman/watch/skill.md
+
+    # ── Document & File Operations ───────────────────────────────────────────
+    - name: pdf
+      description: Read, extract, merge, or process PDF files.
+      source: ~/dev/projects/rnd/skills/anthropic/pdf/skill.md
+
+    - name: docx
+      description: Create, read, edit, or manipulate Word documents (.docx files).
+      source: ~/dev/projects/rnd/skills/anthropic/docx/skill.md
+
+    - name: xlsx
+      description: Open, read, edit, or fix spreadsheet files.
+      source: ~/dev/projects/rnd/skills/anthropic/xlsx/skill.md
+
+    - name: pptx
+      description: Create, read, or edit PowerPoint presentation files.
+      source: ~/dev/projects/rnd/skills/anthropic/pptx/skill.md
+
+    # ── Engineering & Code ───────────────────────────────────────────────────
+    - name: spec-driven-development
+      description: Write a spec before coding starts. Use when requirements are unclear or unstated.
+      source: ~/dev/external/agent-skills/skills/spec-driven-development/SKILL.md
+
+    - name: planning-and-task-breakdown
+      description: Break a spec into atomic, implementable tasks. Use before writing any code.
+      source: ~/dev/external/agent-skills/skills/planning-and-task-breakdown/SKILL.md
+
+    - name: api-and-interface-design
+      description: Guides stable API and interface design. Use when designing REST endpoints or module boundaries.
+      source: ~/dev/external/agent-skills/skills/api-and-interface-design/SKILL.md
+
+    - name: documentation-and-adrs
+      description: Write ADRs and project docs. Use when making architectural decisions or shipping features.
+      source: ~/dev/external/agent-skills/skills/documentation-and-adrs/SKILL.md
+
+    - name: verification-before-completion
+      description: Evidence before assertions. Run before any completion claim, commit, or PR.
+      source: ~/.claude/skills/verification-before-completion/SKILL.md
+
+    - name: systematic-debugging
+      description: Root-cause before fixes. Use when encountering any bug or unexpected behavior.
+      source: ~/.claude/skills/systematic-debugging/SKILL.md
+
+    - name: requesting-code-review
+      description: Dispatch a code reviewer subagent. Use after completing a task or major feature.
+      source: ~/.claude/skills/requesting-code-review/SKILL.md
+
+    - name: receiving-code-review
+      description: Receive and evaluate code review feedback with technical rigor, not performative agreement.
+      source: ~/.claude/skills/receiving-code-review/SKILL.md
+
+    - name: finishing-a-development-branch
+      description: Guide completion of development work — verify tests, merge options, cleanup.
+      source: ~/.claude/skills/finishing-a-development-branch/SKILL.md
+
+    - name: mcp-builder
+      description: Scaffold and build MCP (Model Context Protocol) servers. Use when building new MCP integrations.
+      source: ~/dev/projects/rnd/skills/anthropic/mcp-builder/skill.md
+
+    - name: claude-api
+      description: Build, debug, and optimize Claude API / Anthropic SDK apps with prompt caching.
+      source: ~/dev/projects/rnd/skills/anthropic/claude-api/skill.md
+
+    - name: webapp-testing
+      description: Test local web applications using Playwright. Verify frontend functionality and debug UI.
+      source: ~/dev/projects/rnd/skills/anthropic/webapp-testing/skill.md
+
+    # ── Gemini & Google AI ───────────────────────────────────────────────────
+    - name: gemini-api-dev
+      description: Build apps with Gemini models — multimodal, function calling, structured outputs.
+      source: ~/.claude/skills/gemini-api-dev/skill.md
+
+    - name: gemini-interactions-api
+      description: Call the Gemini API for text generation, chat, streaming, and function calling.
+      source: ~/.claude/skills/gemini-interactions-api/skill.md
+
+    - name: gemini-live-api-dev
+      description: Build real-time bidirectional streaming apps with the Gemini Live API.
+      source: ~/.claude/skills/gemini-live-api-dev/skill.md
+
+    - name: vertex-ai-api-dev
+      description: Use Gemini on Google Cloud Vertex AI. Enterprise environments, Gen AI SDK.
+      source: ~/.claude/skills/vertex-ai-api-dev/skill.md
+
+    # ── Multi-Agent & Orchestration ──────────────────────────────────────────
+    - name: dispatching-parallel-agents
+      description: Dispatch independent tasks to parallel agents with isolated context windows.
+      source: ~/.claude/skills/dispatching-parallel-agents/SKILL.md
+
+    - name: subagent-driven-development
+      description: Execute implementation plans by dispatching fresh subagents per task with two-stage review.
+      source: ~/.claude/skills/subagent-driven-development/SKILL.md
+
+    - name: brainstorming
+      description: Explore intent and requirements before any implementation. HARD GATE before building.
+      source: ~/.claude/skills/brainstorming/SKILL.md
+
+    - name: writing-plans
+      description: Write comprehensive implementation plans before touching code.
+      source: ~/.claude/skills/writing-plans/SKILL.md
+
+    # ── Skill Development & Optimization ────────────────────────────────────
+    - name: writing-skills
+      description: TDD for skill creation — RED-GREEN-REFACTOR cycle using pressure scenarios and subagent testing.
+      source: ~/.claude/skills/writing-skills/SKILL.md
+      requires: []
+
+    - name: skill-creator
+      description: Create new skills, modify and improve existing skills, and measure skill performance.
+      source: ~/dev/projects/rnd/skills/anthropic/skill-creator/skill.md
+
+    - name: skill-optimizer
+      description: Karpathy autoresearch loop for autonomously improving Claude Code skill files.
+      source: ~/.claude/skills/skill-optimizer/skill.md
+
+    - name: meta-optimize
+      description: Analyze skill invocation logs and propose improvements to skills and workflow sequences.
+      source: ~/dev/projects/rnd/skills/aris/meta-optimize/skill.md
+
+    - name: autoresearch
+      description: Autonomous experiment loop — try ideas, measure results, keep what works, repeat.
+      source: ~/.claude/skills/autoresearch/skill.md
+
+    # ── Session & Memory Management ──────────────────────────────────────────
+    - name: agent-session-summary
+      description: Structured end-of-session handoff. Saves to ~/dev/projects/rnd/deepagents/sessions/. Use /wrap.
+      source: ~/.claude/skills/agent-session-summary/SKILL.md
+
+    - name: session-log
+      description: Write a durable session log capturing completed work, findings, open questions, next steps.
+      source: ~/dev/projects/rnd/skills/feynman/session-log/skill.md
+
+    - name: session-search
+      description: Search past session transcripts and logs to recover prior work and decisions.
+      source: ~/dev/projects/rnd/skills/feynman/session-search/skill.md
+
+    # ── Obsidian & Vault ─────────────────────────────────────────────────────
+    - name: obsidian-cli
+      description: Interact with Obsidian vaults — read, create, search, manage notes and tasks.
+      source: ~/.claude/skills/obsidian-cli/skill.md
+
+    - name: obsidian-markdown
+      description: Create and edit Obsidian Flavored Markdown with wikilinks, callouts, and properties.
+      source: ~/.claude/skills/obsidian-markdown/skill.md
+
+    - name: obsidian-bases
+      description: Create and edit Obsidian Bases (.base files) — database-like views of notes.
+      source: ~/.claude/skills/obsidian-bases/skill.md
+
+    # ── Paper & Academic ─────────────────────────────────────────────────────
+    - name: paper-writing
+      description: Turn research findings into a polished paper-style draft with sections and citations.
+      source: ~/dev/projects/rnd/skills/feynman/paper-writing/skill.md
+
+    - name: paper-code-audit
+      description: Compare a paper's claims against its public codebase. Identify mismatches and gaps.
+      source: ~/dev/projects/rnd/skills/feynman/paper-code-audit/skill.md
+
+    - name: replication
+      description: Plan or execute a replication of a paper's results, claims, or benchmarks.
+      source: ~/dev/projects/rnd/skills/feynman/replication/skill.md
+
+    - name: idea-discovery
+      description: Full idea discovery pipeline — survey field, generate ideas, check novelty, refine.
+      source: ~/dev/projects/rnd/skills/aris/idea-discovery/skill.md
+
+    - name: auto-review-loop
+      description: Autonomous multi-round review and improvement loop until quality threshold is met.
+      source: ~/dev/projects/rnd/skills/aris/auto-review-loop/skill.md
+
+    # ── Client & Business ────────────────────────────────────────────────────
+    - name: cerberus
+      description: Deep client research and architecture validation for Principal & Agent engagements.
+      source: ~/.claude/skills/cerberus/skill.md
+
+    - name: doc-coauthoring
+      description: Structured workflow for co-authoring documentation, proposals, and technical specs.
+      source: ~/dev/projects/rnd/skills/anthropic/doc-coauthoring/skill.md
+
+  agents:
+
+    - name: principal-engineer
+      description: Implementation engineer. Takes Architect specs, writes code, runs tests, commits.
+      source: ~/.claudeclaw/agents/principal_engineer/CLAUDE.md
+
+    - name: principal-architect
+      description: Technical architect. Concept to spec, task breakdown, ADRs, project scaffolding.
+      source: ~/.claudeclaw/agents/principal_architect/CLAUDE.md
+
+    - name: principal-strategy
+      description: Offer and product strategist. Market validation, competitor analysis, pricing, go/no-go.
+      source: ~/.claudeclaw/agents/principal_strategy/CLAUDE.md
+
+    - name: principal-pipeline
+      description: Pipeline and outreach specialist. Lead gen, outreach drafts, CRM hygiene.
+      source: ~/.claudeclaw/agents/principal_pipeline/CLAUDE.md
+
+    - name: principal-delivery
+      description: Client delivery PM. Milestones, timelines, risks, client comms, handoffs.
+      source: ~/.claudeclaw/agents/principal_delivery/CLAUDE.md
+
+  prompts:
+
+    - name: wrap
+      description: End-of-session summary slash command. Runs agent-session-summary and saves handoff file.
+      source: ~/.claude/commands/wrap.md
+      requires: [skill:agent-session-summary]
