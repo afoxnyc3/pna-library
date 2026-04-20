@@ -245,6 +245,92 @@ library:
       description: Structured workflow for co-authoring documentation, proposals, and technical specs.
       source: ~/dev/projects/rnd/skills/anthropic/doc-coauthoring/skill.md
 
+    # ── Creator & Content (AI Launchpad — creator-stack) ─────────────────────
+
+    - name: write
+      description: Generalized writing skill for any platform and format — newsletters, YouTube scripts, guides, sales pages, social posts. Handles structure, drafting, and platform conventions.
+      source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/write/SKILL.md
+
+    - name: voice
+      description: Apply an authentic writing voice to produced content. Personality layer invoked by other writing skills or directly.
+      source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/voice/SKILL.md
+
+    - name: research-creator
+      description: Topic and competitor research for any content type. Identifies content gaps and competitive landscape before writing.
+      source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/research/SKILL.md
+
+    - name: title
+      description: Generate optimized titles, headlines, and subject lines for any content type. YouTube, newsletters, blog posts, social.
+      source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/title/SKILL.md
+
+    - name: hook
+      description: Create retention-optimized opening hooks — video intros, newsletter leads, social post openers.
+      source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/hook/SKILL.md
+
+    - name: extract-ideas
+      description: Mine source material (transcripts, newsletters, notes) for repurposable content angles and ideas.
+      source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/extract-ideas/SKILL.md
+
+    - name: thumbnail
+      description: Design high-CTR YouTube thumbnails and cover images. Title-aware, concept-first.
+      source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/thumbnail/SKILL.md
+
+    - name: social-graphic
+      description: Create social media graphics, newsletter headers, blog feature images, OG images, profile banners.
+      source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/social-graphic/SKILL.md
+
+    - name: design-system
+      description: Create, update, or refresh a visual design system or art style guide.
+      source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/design-system/SKILL.md
+
+    - name: brand-guidelines
+      description: Define, codify, or update brand identity and connect it to visual design systems.
+      source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/brand-guidelines/SKILL.md
+
+    - name: nanobanana
+      description: AI image generation and editing using Google Gemini models (nano banana). Requires GEMINI_API_KEY.
+      source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/nanobanana/SKILL.md
+
+    - name: plan-newsletter
+      description: Plan a complete newsletter issue — research, draft, subject line, opening hook, and social promotion posts.
+      source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/plan-newsletter/SKILL.md
+
+    - name: optimize-newsletter
+      description: Optimize a newsletter draft or write a full issue from an outline. Polish, improve, rewrite.
+      source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/optimize-newsletter/SKILL.md
+
+    - name: newsletter-visuals
+      description: Audit a newsletter draft for visual opportunities and generate on-brand visual assets.
+      source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/newsletter-visuals/SKILL.md
+
+    - name: newsletter-to-video
+      description: Repurpose a newsletter issue into a YouTube video outline.
+      source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/newsletter-to-video/SKILL.md
+
+    - name: plan-video
+      description: Complete YouTube video plan — title options, thumbnail concepts, hooks, content outline.
+      source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/plan-video/SKILL.md
+
+    - name: repurpose-video
+      description: Repurpose a completed YouTube video into newsletter issues, social posts, and other formats.
+      source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/repurpose-video/SKILL.md
+
+    - name: community-post
+      description: Create YouTube community posts that drive views and audience engagement.
+      source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/community-post/SKILL.md
+
+    - name: ideate-notes
+      description: Generate Substack Note ideas by scanning published YouTube videos, newsletters, and Notes.
+      source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/ideate-notes/SKILL.md
+
+    - name: write-note
+      description: Create high-engagement Substack Notes. Single short posts or promotion of a newsletter issue.
+      source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/write-note/SKILL.md
+
+    - name: youtube-data
+      description: Retrieve YouTube data via the YouTube Data API — video search, channel details, transcripts, comments, trends. Requires YOUTUBE_API_KEY and uv.
+      source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/youtube-data/SKILL.md
+
   agents:
 
     - name: principal-engineer
@@ -266,6 +352,16 @@ library:
     - name: principal-delivery
       description: Client delivery PM. Milestones, timelines, risks, client comms, handoffs.
       source: ~/.claudeclaw/agents/principal_delivery/CLAUDE.md
+
+    # ── Creator & Content agents (AI Launchpad — creator-stack) ──────────────
+
+    - name: thumbnail-reviewer
+      description: Expert YouTube thumbnail reviewer. Critiques concepts against proven CTR design requirements.
+      source: ~/dev/external/ai-launchpad-marketplace/creator-stack/agents/thumbnail-reviewer.md
+
+    - name: youtube-researcher
+      description: YouTube research specialist. Uses the YouTube Data API to analyze channels, videos, comments, transcripts, and related content.
+      source: ~/dev/external/ai-launchpad-marketplace/creator-stack/agents/youtube-researcher.md
 
   prompts:
 
