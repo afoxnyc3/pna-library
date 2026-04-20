@@ -55,6 +55,10 @@ library:
       source: ~/dev/projects/rnd/skills/aris/research-refine/skill.md
 
     # ── Web & Content ────────────────────────────────────────────────────────
+    - name: media-extract
+      description: Universal media extraction and analysis — YouTube, web articles, local video/audio/PDF, pasted transcripts. Extracts summaries, golden nuggets, workflows, commands, chapters, quotes. Cleans meeting transcripts. Uses yt-dlp + Gemini visual analysis.
+      source: https://github.com/alexadark/media-extract-skill/blob/main/SKILL.md
+
     - name: defuddle
       description: Extract clean markdown from web pages using the Defuddle CLI, removing clutter.
       source: ~/.claude/skills/defuddle/skill.md
