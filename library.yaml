@@ -270,6 +270,7 @@ library:
   prompts:
 
     - name: wrap
-      description: End-of-session summary slash command. Runs agent-session-summary and saves handoff file.
+      description: End-of-session summary and publish. Saves local handoff file via agent-session-summary, then publishes HTML artifact to pna-sessions.vercel.app and notifies via Telegram.
       source: ~/.claude/commands/wrap.md
+      skill: ~/.claude/skills/wrap/SKILL.md
       requires: [skill:agent-session-summary]
