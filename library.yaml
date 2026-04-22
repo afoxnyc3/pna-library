@@ -240,6 +240,100 @@ library:
       description: Autonomous multi-round review and improvement loop until quality threshold is met.
       source: ~/dev/projects/rnd/skills/aris/auto-review-loop/skill.md
 
+    # ── Principal & Agent Consulting (principal-plugin — PRIVATE) ────────────
+    # Source repo: https://github.com/afoxnyc3/principal-plugin
+    # Local path:  ~/dev/projects/principal-plugin/skills/
+    # Visibility:  PRIVATE — do not publish skills publicly without Alex sign-off
+    # Install:     All 5 installable standalone; designed as a sequential lifecycle bundle
+    # Lifecycle:   Phase 0 (Wedge) → Phase 2 (Design) → Phase 3 (Govern) → Phase 4 (Deliver)
+
+    - name: saas-decommission
+      description: >
+        Audits a prospect's or client's SaaS stack to find consolidation, AI-replacement,
+        and license-reclamation opportunities. Produces a CFO-ready savings memo with
+        confidence bands across four lenses: license reclamation, tool consolidation,
+        AI replacement, and strategic consolidation. ALWAYS use this skill when a prospect
+        is exploring AI consulting, asking what AI could do, raising budget objections,
+        or mentioning specific SaaS tools by name. Fire on the very first qualifying
+        call — the P&A opener. Wedge that pays for itself before scope is signed.
+      source: ~/dev/projects/principal-plugin/skills/saas-decommission/SKILL.md
+      phase: "0 — Wedge"
+      requires: []
+      install_mode: standalone
+      source_repo: https://github.com/afoxnyc3/principal-plugin
+      version: "1.0.0"
+
+    - name: problem-decomposition
+      description: >
+        Decomposes a client problem into a MECE issue tree using the 5 Ways to MECE
+        framework (opposite words, math equations, segmentation, process steps, conceptual
+        frameworks). Validates the tree, identifies which branches to investigate first.
+        ALWAYS use this skill before designing any AI solution, before scoping any
+        engagement, before writing agent architecture, when a problem feels too big or
+        fuzzy, or whenever you see "we want AI to help with X" or "figure out Z". This
+        is the spine of every Principal engagement. Skipping produces solutions that fix
+        symptoms, not root causes.
+      source: ~/dev/projects/principal-plugin/skills/problem-decomposition/SKILL.md
+      phase: "2 — Design (spine)"
+      requires: []
+      install_mode: standalone
+      source_repo: https://github.com/afoxnyc3/principal-plugin
+      version: "1.0.0"
+
+    - name: agentic-workflow-solutioning
+      description: >
+        Designs the actual AI agent or workflow architecture for a defined problem.
+        Chooses between single LLM call, workflow, tool-use workflow, open-ended agent,
+        multi-agent, or skill pack. Specifies all 6 guardrails (identity/access, data
+        scope, human-in-the-loop checkpoints, kill conditions, cost ceilings,
+        observability) and provides a Mermaid topology diagram with technology table.
+        ALWAYS use this skill after problem-decomposition has constrained the problem,
+        BEFORE writing any code or architecture diagram, when asked "how should we
+        build this", what architecture, one agent or many, or about tools, MCP, skills,
+        or deployment. This is where Principal's taste — earned from production agents —
+        is encoded.
+      source: ~/dev/projects/principal-plugin/skills/agentic-workflow-solutioning/SKILL.md
+      phase: "2 — Design (taste)"
+      requires: [problem-decomposition]
+      install_mode: standalone
+      source_repo: https://github.com/afoxnyc3/principal-plugin
+      version: "1.0.0"
+
+    - name: threat-model
+      description: >
+        Produces a STRIDE-style threat model adapted for AI agents. Identifies prompt
+        injection (direct, indirect, second-order), tool abuse, data exfiltration, supply
+        chain threats, identity confusion, and runaway autonomous behavior. Scores threats
+        by likelihood x impact, recommends mitigations, produces residual risk register
+        client signs off on. ALWAYS use this skill before any agent or AI workflow goes
+        to build, before any client-facing deployment, when architecture changes (new
+        tool, new MCP, new data source), after agentic-workflow-solutioning produces
+        spec, when deployment touches PII, financial, customer, or regulated data, or
+        whenever conversation includes "deploy", "production", or "go live". Skipping
+        this skill is malpractice.
+      source: ~/dev/projects/principal-plugin/skills/threat-model/SKILL.md
+      phase: "3 — Govern (moat)"
+      requires: [agentic-workflow-solutioning]
+      install_mode: standalone
+      source_repo: https://github.com/afoxnyc3/principal-plugin
+      version: "1.0.0"
+
+    - name: engagement-retrospective
+      description: >
+        Runs a structured 6-part post-engagement retrospective and writes outputs to the
+        P&A case base. Captures the story, job-to-be-done outcome, problem shape,
+        what worked, what didn't, and what is reusable across future engagements.
+        ALWAYS use this skill at close of every Principal engagement, before final
+        invoicing, before follow-on scoping, or at any natural milestone where lessons
+        should be captured. The compounding loop — every retro makes the next engagement
+        faster and more defensible. Skipping means engagement N+1 starts from blank page.
+      source: ~/dev/projects/principal-plugin/skills/engagement-retrospective/SKILL.md
+      phase: "4 — Deliver (compounding)"
+      requires: []
+      install_mode: standalone
+      source_repo: https://github.com/afoxnyc3/principal-plugin
+      version: "1.0.0"
+
     # ── Client & Business ────────────────────────────────────────────────────
     - name: cerberus
       description: Deep client research and architecture validation for Principal & Agent engagements.
