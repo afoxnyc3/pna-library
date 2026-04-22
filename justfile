@@ -32,6 +32,10 @@ sync:
 list:
     claude --dangerously-skip-permissions --model opus "/library list"
 
+# List registered agent-expert-kit domain triads from library.yaml experts:
+list-experts:
+    claude --dangerously-skip-permissions --model opus "/library list experts"
+
 # Search the catalog by keyword
 search keyword:
     claude --dangerously-skip-permissions --model opus "/library search {{keyword}}"
