@@ -367,6 +367,70 @@ library:
       description: YouTube research specialist. Uses the YouTube Data API to analyze channels, videos, comments, transcripts, and related content.
       source: ~/dev/external/ai-launchpad-marketplace/creator-stack/agents/youtube-researcher.md
 
+    # ── Code Quality Personas (Osmani agent-skills) ───────────────────────────
+    # Invocation model: mission-based dispatch, not persistent services.
+    # Orchestration is the caller's responsibility (Clarke, /ship, /review).
+    # Personas do NOT invoke each other — fan-out belongs to slash commands.
+
+    - name: code-reviewer
+      description: >
+        Senior Staff Engineer conducting thorough code review across five axes:
+        correctness, readability, architecture, security, and performance.
+        Produces APPROVE / REQUEST CHANGES verdict with categorized findings.
+        Invoke via /review for single-perspective review, or /ship for parallel
+        fan-out alongside test-engineer and security-auditor.
+      source: ~/dev/external/agent-skills/agents/code-reviewer.md
+      skills:
+        - code-review-and-quality    # multi-axis review driver
+        - auto-review-loop           # iterative fix-and-re-review
+        - requesting-code-review     # pre-review checklist + framing
+        - receiving-code-review      # evaluating incoming review feedback
+      tools:
+        - Read
+        - Glob
+        - Grep
+        - Bash          # read-only inspection (git diff, grep, lint)
+        - TodoWrite     # tracking finding remediation
+
+    - name: test-engineer
+      description: >
+        QA Engineer specialized in test strategy, test writing, and coverage
+        analysis. Applies the Prove-It pattern for bugs (red first), tests at
+        the right level (unit → integration → E2E), and produces coverage gap
+        reports. Invoke via /test for TDD workflow or /ship for parallel QA
+        pass alongside code-reviewer and security-auditor.
+      source: ~/dev/external/agent-skills/agents/test-engineer.md
+      skills:
+        - test-driven-development        # red-green-refactor loop
+        - browser-testing-with-devtools  # Playwright / real-browser E2E
+        - debugging-and-error-recovery   # root-cause before writing tests
+        - verification-before-completion # gate before marking work done
+      tools:
+        - Read
+        - Glob
+        - Grep
+        - Bash    # run test suite, check coverage output
+        - Write
+        - Edit
+
+    - name: security-auditor
+      description: >
+        Security Engineer focused on vulnerability detection, threat modeling,
+        and secure coding practices. Reviews input handling, auth/authz, data
+        protection, infrastructure config, and third-party integrations against
+        the OWASP Top 10. Classifies findings Critical → Info with PoC for
+        Critical/High. Invoke via /ship or a future /audit command.
+      source: ~/dev/external/agent-skills/agents/security-auditor.md
+      skills:
+        - security-and-hardening    # hardening patterns and rules
+        - code-review-and-quality   # security axis of the review matrix
+      tools:
+        - Read
+        - Glob
+        - Grep
+        - Bash        # dependency audits (npm audit, pip-audit, etc.)
+        - WebSearch   # CVE lookups, OWASP reference
+
   prompts:
 
     - name: wrap
