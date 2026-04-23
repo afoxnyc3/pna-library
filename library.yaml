@@ -138,10 +138,6 @@ library:
       source: ~/dev/projects/rnd/skills/anthropic/webapp-testing/skill.md
 
     # ── Gemini & Google AI ───────────────────────────────────────────────────
-    - name: gemini-api-dev
-      description: Build apps with Gemini models — multimodal, function calling, structured outputs.
-      source: ~/.claude/skills/gemini-api-dev/skill.md
-
     - name: gemini-interactions-api
       description: Call the Gemini API for text generation, chat, streaming, and function calling.
       source: ~/.claude/skills/gemini-interactions-api/skill.md
