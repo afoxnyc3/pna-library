@@ -18,6 +18,10 @@ library:
       description: Thorough source-heavy research brief with citations. Triggers on "deep research", "investigate", "research brief".
       source: ~/dev/projects/rnd/skills/feynman/deep-research/skill.md
 
+    - name: feynman-bridge
+      description: Invoke the feynman CLI for deep academic and long-horizon research. Use once per research task before synthesising findings.
+      source: ~/.claude/skills/feynman-bridge/skill.md
+
     - name: source-comparison
       description: Grounded comparison matrix across tools, papers, frameworks, or approaches.
       source: ~/dev/projects/rnd/skills/feynman/source-comparison/skill.md
@@ -88,6 +92,14 @@ library:
       description: Create, read, or edit PowerPoint presentation files.
       source: ~/dev/projects/rnd/skills/anthropic/pptx/skill.md
 
+    - name: file-intel
+      description: Run Gemini file processor on any folder. Extracts content from PDF, PPTX, XLSX, DOCX, CSV, JSON and generates Obsidian-ready summaries.
+      source: ~/.claude/skills/file-intel/skill.md
+
+    - name: preview
+      description: Preview or export Markdown, LaTeX, or research artifacts as rendered documents or PDFs.
+      source: ~/.claude/skills/preview/skill.md
+
     # ── Engineering & Code ───────────────────────────────────────────────────
     - name: spec-driven-development
       description: Write a spec before coding starts. Use when requirements are unclear or unstated.
@@ -129,9 +141,25 @@ library:
       description: Scaffold and build MCP (Model Context Protocol) servers. Use when building new MCP integrations.
       source: ~/dev/projects/rnd/skills/anthropic/mcp-builder/skill.md
 
-    - name: claude-api
-      description: Build, debug, and optimize Claude API / Anthropic SDK apps with prompt caching.
-      source: ~/dev/projects/rnd/skills/anthropic/claude-api/skill.md
+    - name: anthropic-claude-api
+      description: Build, debug, and optimize Claude API / Anthropic SDK apps. Handles prompt caching, model migrations, tool use, batch, and citations. TRIGGER on code importing anthropic/@anthropic-ai/sdk or any Claude API feature question.
+      source: ~/.claude/skills/anthropic-claude-api/skill.md
+
+    - name: agent-sandboxes
+      description: Operate E2B agent sandboxes via CLI. Use when running code in isolation, testing packages, or executing commands safely in a sandbox environment.
+      source: ~/.claude/skills/agent-sandboxes/skill.md
+
+    - name: audit-python
+      description: Audit and optimize Python codebases. Quality review, structure analysis, and improvement recommendations.
+      source: ~/.claude/skills/audit-python/skill.md
+
+    - name: audit-typescript
+      description: Audit and optimize TypeScript codebases. Quality review, structure analysis, and improvement recommendations.
+      source: ~/.claude/skills/audit-typescript/skill.md
+
+    - name: bounded-shell
+      description: Context-preserving shell execution. Caps long command output and auto-summarizes when output would exceed token budget.
+      source: ~/.claude/skills/bounded-shell/skill.md
 
     - name: webapp-testing
       description: Test local web applications using Playwright. Verify frontend functionality and debug UI.
@@ -189,6 +217,10 @@ library:
       description: Autonomous experiment loop — try ideas, measure results, keep what works, repeat.
       source: ~/.claude/skills/autoresearch/skill.md
 
+    - name: library
+      description: Private skill distribution system. Install, push, remove, sync, list, or search skills from the P&A catalog. Triggers on /library commands or skill distribution tasks.
+      source: ~/.claude/skills/library/skill.md
+
     # ── Session & Memory Management ──────────────────────────────────────────
     - name: agent-session-summary
       description: Structured end-of-session handoff. Saves to ~/dev/projects/rnd/deepagents/sessions/. Use /wrap.
@@ -202,6 +234,10 @@ library:
       description: Search past session transcripts and logs to recover prior work and decisions.
       source: ~/dev/projects/rnd/skills/feynman/session-search/skill.md
 
+    - name: tldr
+      description: Save a summary of this conversation to the vault. Key decisions, things to remember, next actions. Stored in the right vault folder automatically.
+      source: ~/.claude/skills/tldr/skill.md
+
     # ── Obsidian & Vault ─────────────────────────────────────────────────────
     - name: obsidian-cli
       description: Interact with Obsidian vaults — read, create, search, manage notes and tasks.
@@ -214,6 +250,18 @@ library:
     - name: obsidian-bases
       description: Create and edit Obsidian Bases (.base files) — database-like views of notes.
       source: ~/.claude/skills/obsidian-bases/skill.md
+
+    - name: daily
+      description: Start the day with vault context. Read or create today's daily note, surface top priorities.
+      source: ~/.claude/skills/daily/skill.md
+
+    - name: vault-setup
+      description: Interactive Obsidian vault configurator. Builds personalized vault structure, CLAUDE.md, and slash commands.
+      source: ~/.claude/skills/vault-setup/skill.md
+
+    - name: json-canvas
+      description: Create and edit JSON Canvas files (.canvas) with nodes, edges, and groups. Use for visual canvases and mind maps in Obsidian.
+      source: ~/.claude/skills/json-canvas/skill.md
 
     # ── Paper & Academic ─────────────────────────────────────────────────────
     - name: paper-writing
@@ -329,6 +377,15 @@ library:
       install_mode: standalone
       source_repo: https://github.com/afoxnyc3/principal-plugin
       version: "1.0.0"
+
+    # ── P&A Publishing ───────────────────────────────────────────────────────
+    - name: pna-publish
+      description: Publish any artifact to the P&A sessions archive at pna-sessions.vercel.app. Use when archiving sessions, diagrams, or research outputs.
+      source: ~/.claude/skills/pna-publish/skill.md
+
+    - name: publish-research
+      description: Publish research results to pna-sessions as formatted pages. Runs comparative analysis across results and notifies Alex.
+      source: ~/.claude/skills/publish-research/skill.md
 
     # ── Client & Business ────────────────────────────────────────────────────
     - name: cerberus
