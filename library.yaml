@@ -165,6 +165,72 @@ library:
       description: Test local web applications using Playwright. Verify frontend functionality and debug UI.
       source: ~/dev/projects/rnd/skills/anthropic/webapp-testing/skill.md
 
+    # ── Engineering Practices (agent-skills — Addy Osmani) ──────────────────
+    # Source: ~/dev/external/agent-skills/skills/ — update via git pull
+    - name: browser-testing-with-devtools
+      description: Test and debug browser-based apps using real browsers and DevTools. Use when inspecting DOM, capturing console errors, or verifying frontend behaviour.
+      source: ~/dev/external/agent-skills/skills/browser-testing-with-devtools/SKILL.md
+
+    - name: ci-cd-and-automation
+      description: Set up or modify CI/CD pipelines. Use when automating quality gates, configuring builds, or wiring deployment workflows.
+      source: ~/dev/external/agent-skills/skills/ci-cd-and-automation/SKILL.md
+
+    - name: code-review-and-quality
+      description: Multi-axis code review across correctness, readability, architecture, security, and performance. Use before merging any change.
+      source: ~/dev/external/agent-skills/skills/code-review-and-quality/SKILL.md
+
+    - name: code-simplification
+      description: Refactor code for clarity without changing behaviour. Use when code works but is hard to read, maintain, or extend.
+      source: ~/dev/external/agent-skills/skills/code-simplification/SKILL.md
+
+    - name: context-engineering
+      description: Optimize agent context setup. Use when starting a session, when output quality degrades, or when switching tasks.
+      source: ~/dev/external/agent-skills/skills/context-engineering/SKILL.md
+
+    - name: debugging-and-error-recovery
+      description: Systematic root-cause debugging. Use when tests fail, builds break, or behaviour doesn't match expectations — before proposing fixes.
+      source: ~/dev/external/agent-skills/skills/debugging-and-error-recovery/SKILL.md
+
+    - name: deprecation-and-migration
+      description: Manage removal of old systems, APIs, or features. Use when migrating users from one implementation to another or retiring legacy code.
+      source: ~/dev/external/agent-skills/skills/deprecation-and-migration/SKILL.md
+
+    - name: frontend-ui-engineering
+      description: Build production-quality UIs. Use when creating components, implementing layouts, managing state, or handling accessibility.
+      source: ~/dev/external/agent-skills/skills/frontend-ui-engineering/SKILL.md
+
+    - name: git-workflow-and-versioning
+      description: Structure git workflow — committing, branching, resolving conflicts, PRs. Use on any code change.
+      source: ~/dev/external/agent-skills/skills/git-workflow-and-versioning/SKILL.md
+
+    - name: incremental-implementation
+      description: Deliver changes incrementally. Use when implementing any feature touching more than one file — ship in small, reviewable slices.
+      source: ~/dev/external/agent-skills/skills/incremental-implementation/SKILL.md
+
+    - name: performance-optimization
+      description: Optimize application performance. Use when performance requirements exist, regressions are suspected, or load targets need to be hit.
+      source: ~/dev/external/agent-skills/skills/performance-optimization/SKILL.md
+
+    - name: security-and-hardening
+      description: Harden code against vulnerabilities. Use when handling user input, auth, data storage, or external integrations.
+      source: ~/dev/external/agent-skills/skills/security-and-hardening/SKILL.md
+
+    - name: shipping-and-launch
+      description: Prepare production launches. Use when deploying to production, building a pre-launch checklist, or setting up monitoring and rollback.
+      source: ~/dev/external/agent-skills/skills/shipping-and-launch/SKILL.md
+
+    - name: source-driven-development
+      description: Ground every implementation decision in official documentation. Use when you need authoritative, source-cited code free of outdated patterns.
+      source: ~/dev/external/agent-skills/skills/source-driven-development/SKILL.md
+
+    - name: test-driven-development
+      description: Drive development with tests. Use when implementing logic, fixing bugs, or changing behaviour — tests first, code second.
+      source: ~/dev/external/agent-skills/skills/test-driven-development/SKILL.md
+
+    - name: using-agent-skills
+      description: Discover and invoke agent skills. Use at session start or when determining which skill applies to the current task.
+      source: ~/dev/external/agent-skills/skills/using-agent-skills/SKILL.md
+
     # ── Gemini & Google AI ───────────────────────────────────────────────────
     - name: gemini-interactions-api
       description: Call the Gemini API for text generation, chat, streaming, and function calling.
