@@ -374,3 +374,13 @@ library:
       source: ~/.claude/commands/wrap.md
       skill: ~/.claude/skills/wrap/SKILL.md
       requires: [skill:agent-session-summary]
+
+experts:
+- name: Claudeclaw Missions
+  domain: claudeclaw-missions
+  path: /Users/alex/.pna/experts/claudeclaw-missions
+  last_sync: '2026-04-21'
+- name: Creator Stack
+  domain: creator-stack
+  path: /Users/alex/.pna/experts/creator-stack
+  last_sync: '2026-04-23'
