@@ -165,6 +165,15 @@ library:
       description: Test local web applications using Playwright. Verify frontend functionality and debug UI.
       source: ~/dev/projects/rnd/skills/anthropic/webapp-testing/skill.md
 
+
+    - name: grill-me
+      description: Relentless Socratic interview that stress-tests a plan or design by walking every branch of the decision tree. Use when the user wants to stress-test a plan, get grilled on their design, challenge their assumptions, or says "grill me".
+      source: ~/dev/projects/pna-library/skills/grill-me/SKILL.md
+
+    - name: grill-with-docs
+      description: Grilling session that challenges a plan against the project domain model, sharpens terminology, and updates CONTEXT.md and ADRs inline as decisions crystallise. Use when the user wants to stress-test a plan against their project's language and documented decisions, or says "grill me with docs".
+      source: ~/dev/projects/pna-library/skills/grill-with-docs/SKILL.md
+
     # ── Engineering Practices (agent-skills — Addy Osmani) ──────────────────
     # Source: ~/dev/external/agent-skills/skills/ — update via git pull
     - name: browser-testing-with-devtools
@@ -188,8 +197,8 @@ library:
       source: ~/dev/external/agent-skills/skills/context-engineering/SKILL.md
 
     - name: debugging-and-error-recovery
-      description: Systematic root-cause debugging. Use when tests fail, builds break, or behaviour doesn't match expectations — before proposing fixes.
-      source: ~/dev/external/agent-skills/skills/debugging-and-error-recovery/SKILL.md
+      description: Disciplined six-phase diagnosis loop for bugs, test failures, build breaks, and performance regressions. Reproduce first, hypothesise before touching code, fix, post-mortem. Use when tests fail, builds break, behaviour doesn't match expectations, something is broken or throwing, or you encounter any unexpected error.
+      source: ~/dev/projects/pna-library/skills/debugging-and-error-recovery/SKILL.md
 
     - name: deprecation-and-migration
       description: Manage removal of old systems, APIs, or features. Use when migrating users from one implementation to another or retiring legacy code.
