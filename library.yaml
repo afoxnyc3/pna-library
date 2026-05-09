@@ -101,6 +101,10 @@ library:
       source: ~/.claude/skills/preview/skill.md
 
     # ── Engineering & Code ───────────────────────────────────────────────────
+    - name: repolens
+      description: Repo intelligence via Repolens CLI. Use when you need to orient on a codebase, audit a repo, answer "what does this codebase do", run code analysis, or prepare for a refactor without dumping the entire source into context. Triggers on "analyze this repo", "orient on codebase", "audit repo", "code intelligence", "refactor prep".
+      source: ~/dev/projects/pna-library/skills/repolens/SKILL.md
+
     - name: spec-driven-development
       description: Write a spec before coding starts. Use when requirements are unclear or unstated.
       source: ~/dev/external/agent-skills/skills/spec-driven-development/SKILL.md
