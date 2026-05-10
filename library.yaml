@@ -600,3 +600,144 @@ library:
       source: ~/.claude/commands/wrap.md
       skill: ~/.claude/skills/wrap/SKILL.md
       requires: [skill:agent-session-summary]
+
+# ── Community Catalog ─────────────────────────────────────────────────────────
+# External skill repositories tracked for reference. Not installed by default.
+# status: watch = monitor for future use | reference = consult during skill authoring | selective-install = specific clusters worth pulling in
+
+community_catalog:
+
+  # ── Indexes & Aggregators ─────────────────────────────────────────────────
+
+  - name: awesome-agent-skills
+    url: https://github.com/VoltAgent/awesome-agent-skills
+    description: Primary community aggregation layer. 1,000+ skills from official dev teams — Anthropic, Microsoft, Google, Vercel, Stripe, Cloudflare, Trail of Bits, Hugging Face, Figma, and 20+ others. Covers Claude Code, Codex, Cursor, Gemini CLI, GitHub Copilot, Windsurf.
+    domain: [index, all-domains]
+    stars: null
+    skills_count: 1000
+    status: reference
+    p_and_a_relevance: Primary discovery surface before authoring any new skill. Check here first.
+
+  - name: antigravity-awesome-skills
+    url: https://github.com/sickn33/antigravity-awesome-skills
+    description: Installable cross-platform library of 1,400+ agentic skills. Ships a CLI installer and curated bundles (Security Engineer, QA & Testing, Web Wizard, Essentials) for fast role-based setup.
+    domain: [index, all-domains]
+    stars: 35800
+    skills_count: 1400
+    status: reference
+    install_cmd: npx antigravity-awesome-skills
+    p_and_a_relevance: Bundle model useful for equipping new agents quickly. Review Security Engineer bundle before Chelsea Piers wave 1.
+
+  # ── Dev & Engineering (Horizontal) ───────────────────────────────────────
+
+  - name: everything-claude-code
+    url: https://github.com/affaan-m/everything-claude-code
+    description: Anthropic hackathon winner. Universal cross-platform harness with 28 specialized agents, 119 skills, and 60 slash commands for Claude Code, Cursor, Codex, and OpenCode. Covers planning, TDD, security review, build error resolution, and 12 language ecosystems.
+    domain: [dev, horizontal, cross-platform]
+    stars: 169560
+    agents_count: 28
+    skills_count: 119
+    commands_count: 60
+    status: selective-install
+    p_and_a_relevance: Security review + TDD + build error clusters fill gaps for principal_engineer. High trust (169k stars, official Anthropic origin).
+
+  - name: wshobson-agents
+    url: https://github.com/wshobson/agents
+    description: 185 specialized agents, 153 skills, 100 commands across 80 plugins and 25 categories. Full-stack, infra, security, data/AI (LangGraph, RAG), docs, business ops. Tiered model strategy (Opus/Sonnet/Haiku by criticality).
+    domain: [dev, orchestration, data-ai]
+    stars: 34600
+    agents_count: 185
+    skills_count: 153
+    commands_count: 100
+    status: watch
+    p_and_a_relevance: AI/agent orchestration cluster (LangGraph, RAG, multi-agent) relevant when sandbox orchestrator development starts. Tiered model assignment pattern worth borrowing.
+
+  - name: superpowers
+    url: https://github.com/obra/superpowers
+    description: The original Claude Code skills framework. Pioneered the SKILL.md format, slash-command invocation, and skill priority hierarchy. Community-editable companion repo (superpowers-skills) and experimental branch (superpowers-lab).
+    domain: [dev, framework, methodology]
+    stars: null
+    status: reference
+    p_and_a_relevance: Historical reference. Our SKILL.md vocabulary derives from this. Consult superpowers-lab for experimental patterns.
+
+  # ── Security ──────────────────────────────────────────────────────────────
+
+  - name: trailofbits-skills
+    url: https://github.com/trailofbits/skills
+    description: Professional-grade security skills from Trail of Bits. 40+ skills across smart contract auditing (6 blockchains), C/C++ code review, static analysis (CodeQL, Semgrep), malware analysis (YARA), timing side-channel verification, mutation testing, mobile APK scanning, supply chain auditing.
+    domain: [security, audit, verification]
+    stars: 2439
+    skills_count: 40
+    status: selective-install
+    p_and_a_relevance: Code auditing (13 skills) and verification (5 skills) clusters for principal_engineer. Skip smart contract and mobile — outside P&A scope.
+
+  - name: cybersecurity-skill
+    url: https://github.com/Masriyan/Claude-Code-CyberSecurity-Skill
+    description: 15 Claude Code skills for cybersecurity professionals covering offensive, defensive, analytical, and operational domains. Includes incident response, threat hunting, log analysis, CSOC automation, OSINT, network/cloud security, and red team tools.
+    domain: [security, cybersecurity, it-ops]
+    stars: null
+    skills_count: 15
+    status: selective-install
+    p_and_a_relevance: Defensive cluster (incident response, threat hunting, log analysis, cloud security) relevant for Chelsea Piers IT Ops. Skip offensive skills (exploit dev, red team, malware analysis).
+    dependency_gate: Requires Nmap, Burp Suite, Ghidra, Volatility for full feature set — verify before wiring to principal_engineer.
+
+  # ── Governance, Risk & Compliance ─────────────────────────────────────────
+
+  - name: claude-skills-grc
+    url: https://github.com/Sushegaad/Claude-Skills-Governance-Risk-and-Compliance
+    description: Domain skills package for GRC professionals. Covers ISO 27001 (2013 + 2022), SOC 2, FedRAMP, GDPR, HIPAA, NIST CSF 2.0, PCI DSS, and SWIFT CSP v2025. Generates audit-ready control narratives, policy templates, and regulatory docs. Benchmarked at 95% accuracy across 375 compliance assertions vs 81% baseline.
+    domain: [compliance, grc, security]
+    frameworks: [iso-27001, soc2, fedramp, gdpr, hipaa, nist-csf, pci-dss, swift-csp]
+    status: watch
+    p_and_a_relevance: Relevant for Chelsea Piers compliance layer post wave 1. Evaluate after NinjaOne/Azure/Email Triage plugins are live.
+
+  # ── Cloud & Enterprise Platforms ──────────────────────────────────────────
+
+  - name: microsoft-skills
+    url: https://github.com/microsoft/skills
+    description: Official Microsoft skills package. 174 skills across Azure SDKs, AI Foundry (agents, content safety), Cosmos DB, Blob Storage, Event Grid, Entra, Key Vault, App Insights, OpenTelemetry. Multi-language (Python, .NET, TypeScript, Java, Rust). 1,158 test scenarios via Ralph Loop eval harness.
+    domain: [azure, cloud, microsoft, enterprise]
+    stars: null
+    skills_count: 174
+    status: reference
+    p_and_a_relevance: Azure/Graph/Entra patterns are reference material when building microsoft-graph-auth skill for Chelsea Piers. Do not install wholesale.
+
+  # ── Domain Verticals ──────────────────────────────────────────────────────
+
+  - name: claude-skills-enterprise
+    url: https://github.com/alirezarezvani/claude-skills
+    description: 205+ production-ready skills across 9 enterprise domains. Engineering, product management, marketing (43 skills across 7 pods), C-level advisory (10 executive roles), project management with Atlassian MCP, RA/QM compliance, finance, business growth. 16 agents with separate orchestration logic.
+    domain: [enterprise, multi-domain, marketing, product]
+    stars: null
+    skills_count: 205
+    agents_count: 16
+    status: watch
+    p_and_a_relevance: Marketing pod and C-level advisory skills potentially useful for P&A pipeline and strategy work. Revisit when sandbox orchestration builds.
+
+  - name: skills-for-architects
+    url: https://github.com/AlpacaLabsLLC/skills-for-architects
+    description: Domain plugin package for AEC (Architecture, Engineering, Construction) professionals. 7 agents, 36 skills, 7 rules, 3 hooks across 9 plugins covering site planning, zoning analysis, FF&E design, sustainability, materials research, and presentation workflows.
+    domain: [aec, architecture, vertical-domain]
+    stars: 130
+    forks: 31
+    agents_count: 7
+    skills_count: 36
+    status: reference
+    p_and_a_relevance: Model example of domain-vertical skill packaging. Structural reference for authoring Chelsea Piers IT ops plugins.
+
+  - name: claude-legal-skill
+    url: https://github.com/evolsb/claude-legal-skill
+    description: Legal/contract review domain skills. AI-powered CUAD risk detection, market benchmarks, and lawyer-ready redlines. Handles NDAs, SaaS agreements, M&A docs, merchant agreements. Cross-platform (Claude Code, Codex, Cursor, GitHub Copilot, Gemini CLI).
+    domain: [legal, contracts, compliance]
+    status: watch
+    p_and_a_relevance: Relevant if P&A scopes SOW or contract review work. Hold until that use case surfaces.
+
+  # ── Meta / Orchestration ─────────────────────────────────────────────────
+
+  - name: harness
+    url: https://github.com/revfactory/harness
+    description: Meta-skill that generates domain-specific agent teams and skill definitions dynamically. Supports 6 patterns — Pipeline, Fan-out/Fan-in, Expert Pool, Producer-Reviewer, Supervisor, Hierarchical Delegation. Companion harness-100 repo ships 100 pre-built team configurations across 10 domains.
+    domain: [meta, orchestration, agent-teams]
+    status: watch
+    blocker: Requires CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 — experimental flag, not production-ready.
+    p_and_a_relevance: Directly maps to sandbox orchestrator vision. Revisit when Claude Code agent teams exits experimental.
