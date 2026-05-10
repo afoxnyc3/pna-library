@@ -1,0 +1,78 @@
+# Eval harness for api-auth-patterns
+# Binary assertions — each scenario should produce PASS or FAIL
+# Run: review output against each assertion. All 5 must pass for skill to ship.
+
+scenarios:
+
+  - id: pattern-a-api-key
+    name: "Meraki API Key auth — correct header placement"
+    input: |
+      Implement authentication for Cisco Meraki. The API uses an API key sent
+      in the X-Cisco-Meraki-API-Key header. Required env var: MERAKI_API_KEY.
+      Show the auth class and a probe request to GET /organizations.
+    assertions:
+      - "Output uses MERAKI_API_KEY env var via os.getenv or equivalent — no hardcoded key"
+      - "Header name is X-Cisco-Meraki-API-Key (not Authorization: Bearer)"
+      - "Probe request targets /organizations and expects 200"
+      - "Missing env var raises an error (EnvironmentError or equivalent), not silent None"
+
+  - id: pattern-b-oauth2-cc
+    name: "NinjaOne OAuth2 Client Credentials — token cache with refresh"
+    input: |
+      Implement authentication for NinjaOne RMM. It uses OAuth2 client credentials.
+      Token URL: https://app.ninjarmm.com/ws/oauth/token
+      Required env vars: NINJARMM_CLIENT_ID, NINJARMM_CLIENT_SECRET
+      Scope: monitoring management control
+      Show the auth class, token caching logic, and probe request.
+    assertions:
+      - "Token is fetched via POST to the token_url with grant_type=client_credentials"
+      - "Cached token is reused until expiry — not fetched on every request"
+      - "Expiry buffer of at least 10 seconds prevents last-second expiry race"
+      - "Authorization header format is 'Bearer <token>'"
+      - "Refresh is triggered automatically without requiring caller to handle it"
+
+  - id: pattern-c-hmac-sha1
+    name: "Mimecast HMAC-SHA1 — per-request signature with UTC timestamp"
+    input: |
+      Implement authentication for Mimecast. Each request requires a per-request
+      HMAC-SHA1 signature. Required env vars: MIMECAST_ACCESS_KEY, MIMECAST_SECRET_KEY,
+      MIMECAST_APP_ID, MIMECAST_APP_KEY. The secret key is base64-encoded.
+      Show the signed_headers method for URI /api/account/get-account.
+    assertions:
+      - "MIMECAST_SECRET_KEY is base64-decoded before use in HMAC computation"
+      - "Signature data includes: date, request_id, URI, and app_key joined with colon"
+      - "Date string is UTC-formatted (not local time)"
+      - "Request ID (nonce) is unique per call — uuid or equivalent"
+      - "Authorization header format is: 'MC {access_key}:{app_id}:{signature}'"
+      - "x-mc-date, x-mc-req-id, and x-mc-app-id headers are all included in output"
+
+  - id: pattern-d-oauth1-tba
+    name: "NetSuite OAuth 1.0a TBA — HMAC-SHA256 with correct account ID format"
+    input: |
+      Implement authentication for NetSuite ERP using OAuth 1.0a TBA.
+      Required env vars: NETSUITE_ACCOUNT_ID, NETSUITE_CONSUMER_KEY,
+      NETSUITE_CONSUMER_SECRET, NETSUITE_TOKEN, NETSUITE_TOKEN_SECRET.
+      Show the auth header construction and a probe request to GET /customer?limit=1.
+      Note: NetSuite uses HMAC-SHA256, not SHA1.
+    assertions:
+      - "oauth_signature_method is HMAC-SHA256 (not HMAC-SHA1)"
+      - "NETSUITE_ACCOUNT_ID is uppercased with underscores (not hyphens) in the base URL"
+      - "Signature base string is: METHOD + & + percent-encoded URL + & + percent-encoded sorted params"
+      - "Signing key is: percent-encoded consumer_secret + & + percent-encoded token_secret"
+      - "Base URL uses suitetalk.api.netsuite.com domain (not rest.netsuite.com)"
+
+  - id: pattern-e-msal-graph
+    name: "MSAL Graph OAuth2 — app permissions with silent token refresh"
+    input: |
+      Implement authentication for Microsoft Graph API (app permissions, no user sign-in).
+      Required env vars: AZURE_TENANT_ID, AZURE_CLIENT_ID, AZURE_CLIENT_SECRET.
+      Default scope: https://graph.microsoft.com/.default
+      Show the MSAL client setup, token acquisition with silent refresh fallback,
+      and a probe request to GET /organization.
+    assertions:
+      - "Uses ConfidentialClientApplication (not PublicClientApplication)"
+      - "Calls acquire_token_silent before acquire_token_for_client — cache-first pattern"
+      - "Raises an error (not silently returns None) when token acquisition fails"
+      - "Authorization header format is 'Bearer <token>'"
+      - "Probe request targets /organization at https://graph.microsoft.com/v1.0"
+      - "Error message includes MSAL error_description when auth fails"

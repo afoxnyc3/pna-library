@@ -224,6 +224,13 @@ library:
       description: Optimize application performance. Use when performance requirements exist, regressions are suspected, or load targets need to be hit.
       source: ~/dev/external/agent-skills/skills/performance-optimization/SKILL.md
 
+    - name: api-auth-patterns
+      description: Implement authentication for external APIs. Use when integrating with any API requiring non-trivial auth — NinjaOne, Mimecast, NetSuite, Meraki, AWS, or Microsoft Graph. Covers API Key, OAuth2 Client Credentials, HMAC-SHA1, OAuth 1.0a TBA, AWS SigV4/STS, and MSAL/Graph OAuth2.
+      source: ~/dev/projects/pna-library/skills/api-auth-patterns/SKILL.md
+      consumers: [principal_engineer, principal_architect]
+      evals: ~/dev/projects/pna-library/skills/api-auth-patterns/evals/fixtures.yaml
+      tags: [auth, integration, oauth, hmac, aws, msal, chelsea-piers]
+
     - name: security-and-hardening
       description: Harden code against vulnerabilities. Use when handling user input, auth, data storage, or external integrations.
       source: ~/dev/external/agent-skills/skills/security-and-hardening/SKILL.md
