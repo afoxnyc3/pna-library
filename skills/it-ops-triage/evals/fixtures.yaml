@@ -1,0 +1,80 @@
+# Eval harness for it-ops-triage
+# Binary assertions — 5 scenarios covering alert parsing, priority classification,
+# routing, escalation, and batch mode
+# All 5 must pass for skill to ship.
+
+scenarios:
+
+  - id: guardduty-high-severity-route
+    name: "GuardDuty HIGH finding — correct priority and route to aws-security"
+    input: |
+      Triage this GuardDuty alert:
+      {
+        "type": "UnauthorizedAccess:EC2/SSHBruteForce",
+        "severity": 7.2,
+        "resource": { "ec2InstanceDetail": { "instanceId": "i-0abc123" } },
+        "description": "EC2 instance is performing SSH brute force attacks."
+      }
+    assertions:
+      - "Classifies priority as P1"
+      - "Routes to aws-security plugin"
+      - "Triage record includes source = GuardDuty"
+      - "SLA target shows 15 min response / 1 hour containment"
+      - "Does NOT route to azure-security or meraki-network"
+
+  - id: meraki-uplink-down-p0-escalation
+    name: "Meraki WAN down — P0 escalation triggered"
+    input: |
+      New Meraki alert: alertType=uplink_down, deviceName=MX84-HQ, networkName=Chelsea-Piers-HQ,
+      occurredAt=2026-05-18T14:32:00Z. Both primary and failover uplinks are down at headquarters.
+    assertions:
+      - "Classifies priority as P0"
+      - "Routes to meraki-network plugin"
+      - "Escalation action mentions Teams #it-security AND phone notification"
+      - "Escalation happens before routing (not after)"
+      - "Does NOT classify as P2 or lower"
+
+  - id: defender-account-compromised-override
+    name: "Defender AccountCompromised — P0 override regardless of raw severity"
+    input: |
+      Microsoft Defender alert received:
+      title: "Suspicious sign-in from unusual location",
+      severity: "Medium",
+      detectionSource: "MicrosoftDefenderForIdentity",
+      affectedAssets: ["user: jdoe@chelseapiers.com"],
+      category: "AccountCompromised"
+    assertions:
+      - "Overrides Medium severity to P0 due to AccountCompromised category"
+      - "Routes to azure-security plugin"
+      - "Triage record notes the override reason"
+      - "Escalation notification is triggered (CISO + IT Manager)"
+      - "Does NOT remain at P2 (Medium mapping without override)"
+
+  - id: mimecast-phishing-p1-route
+    name: "Mimecast impersonation block — P1, routes to mimecast-security"
+    input: |
+      Mimecast policy trigger: action=block, senderAddress=ceo@chelseapierz.com,
+      recipientAddress=cfo@chelseapiers.com, definition=impersonation_protect,
+      subject="Urgent wire transfer needed"
+    assertions:
+      - "Classifies priority as P1"
+      - "Routes to mimecast-security plugin"
+      - "Triage record identifies domain as email"
+      - "Notes the impersonation pattern (lookalike domain chelseapierz.com vs chelseapiers.com)"
+      - "Does NOT auto-close or classify as P3"
+
+  - id: batch-triage-mixed-priorities
+    name: "Batch of 4 alerts — correct sort order and P0 halt behavior"
+    input: |
+      Process this batch of 4 alerts:
+      1. NinjaOne: deviceId=ws-045, eventType=device_offline, severity=MEDIUM, message="Workstation offline"
+      2. GuardDuty: type=IAMUser/AnomalousBehavior, severity=8.9, resource=IAMUser:root
+      3. Meraki: alertType=device_offline, deviceName=AP-Floor3, networkName=Chelsea-Piers-HQ
+      4. Defender: title="Brute force attack", severity=High, detectionSource=DefenderForEndpoint
+    assertions:
+      - "Processes P0 (GuardDuty root activity) before any other alert"
+      - "Halts batch and escalates on the root account GuardDuty finding before continuing"
+      - "GuardDuty root alert classified P0 (root account override rule)"
+      - "Defender brute force classified P1"
+      - "NinjaOne device offline classified P2 or P3"
+      - "Batch summary includes count breakdown by priority"

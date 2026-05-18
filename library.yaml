@@ -238,6 +238,13 @@ library:
       evals: ~/dev/projects/pna-library/skills/microsoft-graph-auth/evals/fixtures.yaml
       tags: [auth, microsoft, graph, msal, m365, sharepoint, teams, azure, chelsea-piers]
 
+    - name: it-ops-triage
+      description: Alert classification and routing loop for IT operations. Use when an alert, incident, or event arrives from any monitoring tool. Parses GuardDuty, Defender, Meraki, NinjaOne, and Mimecast alerts into standardized triage records, classifies P0-P3 priority, routes to the correct specialist plugin, triggers escalation, and generates Jira tickets for P0/P1.
+      source: ~/dev/projects/pna-library/skills/it-ops-triage/SKILL.md
+      consumers: [it-ops-lead, azure-security, aws-security, meraki-network, mimecast-security, ninjaone-rmm]
+      evals: ~/dev/projects/pna-library/skills/it-ops-triage/evals/fixtures.yaml
+      tags: [it-ops, triage, routing, incident-response, classification, chelsea-piers]
+
     - name: security-and-hardening
       description: Harden code against vulnerabilities. Use when handling user input, auth, data storage, or external integrations.
       source: ~/dev/external/agent-skills/skills/security-and-hardening/SKILL.md
