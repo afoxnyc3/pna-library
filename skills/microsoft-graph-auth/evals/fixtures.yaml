@@ -1,0 +1,66 @@
+# Eval harness for microsoft-graph-auth
+# Binary assertions — 5 scenarios covering the 4 Chelsea Piers consumer plugins + error handling
+# All 5 must pass for skill to ship.
+
+scenarios:
+
+  - id: permission-model-selection
+    name: "Daemon vs delegated — correct model for IT ops context"
+    input: |
+      We are building the email-triage-m365 plugin. It reads unread messages from
+      the shared IT helpdesk mailbox (it-helpdesk@chelseapiers.com) and sends
+      auto-replies. No user needs to sign in. Which permission model should we use
+      and what Graph permissions do we need?
+    assertions:
+      - "Recommends application permissions (not delegated)"
+      - "Explicitly states Mail.Read and Mail.Send as required application permissions"
+      - "Explains that admin consent is required for application permissions"
+      - "Does NOT recommend delegated permissions for this scenario"
+
+  - id: msal-app-client-setup
+    name: "ConfidentialClientApplication setup — correct authority and token acquisition order"
+    input: |
+      Show the correct MSAL Python setup for an application permissions flow.
+      Env vars: AZURE_TENANT_ID, AZURE_CLIENT_ID, AZURE_CLIENT_SECRET.
+      The client must cache tokens and refresh automatically without the caller
+      managing token lifecycle.
+    assertions:
+      - "Uses ConfidentialClientApplication (not PublicClientApplication)"
+      - "Authority URL is https://login.microsoftonline.com/{tenant_id} (not common or organizations)"
+      - "Calls acquire_token_silent before acquire_token_for_client — cache-first pattern"
+      - "Token expiry check includes a buffer (10+ seconds before expiry) to prevent race conditions"
+      - "Raises a descriptive error when token acquisition fails — includes error_description from MSAL result"
+
+  - id: probe-sharepoint
+    name: "SharePoint probe — correct endpoint and required permission"
+    input: |
+      We've set up MSAL for the sharepoint plugin. Show the probe request to confirm
+      auth is working, and state the minimum application permission required.
+    assertions:
+      - "Probe targets /sites/root or a specific SharePoint site path via Graph base URL"
+      - "Uses Authorization: Bearer <token> header pattern"
+      - "States Sites.Read.All as the minimum required application permission"
+      - "Probe call includes $select to limit fields and reduce response size"
+
+  - id: error-aadsts65001
+    name: "Admin consent error — correct diagnosis and fix"
+    input: |
+      The MSAL token acquisition call returned: AADSTS65001: The user or administrator
+      has not consented to use the application with ID 'abc-123'. How do we fix this?
+    assertions:
+      - "Identifies this as a missing admin consent error (not a credential error)"
+      - "Provides the Azure portal path to grant admin consent OR the az CLI command"
+      - "Does NOT recommend rotating the client secret (wrong diagnosis)"
+      - "Mentions that admin consent is required once per tenant per permission set"
+
+  - id: mcp-server-lazy-init
+    name: "MCP server integration — single client instance with lazy init"
+    input: |
+      Show how to integrate the GraphClient into an MCP server (FastMCP).
+      The client should be initialized once, not on every tool call, and it
+      should read credentials from environment variables automatically.
+    assertions:
+      - "GraphClient is instantiated once using a module-level lazy pattern (not per-call)"
+      - "Uses a get_graph() or similar accessor function — not a global that initializes at import time"
+      - "Tool functions call get_graph() and use the returned client's methods"
+      - "Client reads from env vars via os.getenv — no hardcoded credentials in the MCP file"

@@ -231,6 +231,13 @@ library:
       evals: ~/dev/projects/pna-library/skills/api-auth-patterns/evals/fixtures.yaml
       tags: [auth, integration, oauth, hmac, aws, msal, chelsea-piers]
 
+    - name: microsoft-graph-auth
+      description: Implement Microsoft Graph API authentication for Azure, M365, SharePoint, and Teams. Use when connecting to any Microsoft 365 service — email, SharePoint, Teams, Entra ID, Defender. Covers MSAL confidential client, app vs delegated permissions, token caching, admin consent flow, scope selection, and MCP server integration pattern.
+      source: ~/dev/projects/pna-library/skills/microsoft-graph-auth/SKILL.md
+      consumers: [principal_engineer, email-triage-m365, sharepoint, teams, azure-security]
+      evals: ~/dev/projects/pna-library/skills/microsoft-graph-auth/evals/fixtures.yaml
+      tags: [auth, microsoft, graph, msal, m365, sharepoint, teams, azure, chelsea-piers]
+
     - name: security-and-hardening
       description: Harden code against vulnerabilities. Use when handling user input, auth, data storage, or external integrations.
       source: ~/dev/external/agent-skills/skills/security-and-hardening/SKILL.md
