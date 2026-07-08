@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{{REPORT_TITLE}} — Principal &amp; Agent</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+/* ── TOKENS (ink/dark theme) ────────────────────────────────────────────── */
+:root {
+  --bg:           #080c09;
+  --bg-surface:   #0e1410;
+  --bg-card:      #131a14;
+  --bg-card-hover:#18211a;
+  --border:       #1e2b20;
+  --border-mid:   #253228;
+  --border-bright:#2e3f31;
+  --text:         #e8e3d5;
+  --text-muted:   #7a7669;
+  --text-dim:     #404638;
+  --green:        #1f6b3a;
+  --green-mid:    #267d46;
+  --green-bright: #2e9453;
+  --gold:         #c8a96e;
+  --gold-bright:  #d4b87e;
+  --gold-dim:     #7a6540;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+  --radius:       2px;
+  --max-w:        1100px;
+  --pad-x:        max(2rem, calc((100vw - var(--max-w)) / 2));
+  /* status */
+  --status-critical-bg: rgba(138,31,31,0.12);
+  --status-critical-bd: rgba(138,31,31,0.45);
+  --status-high-bg:     rgba(122,90,24,0.12);
+  --status-high-bd:     rgba(122,90,24,0.45);
+  --status-medium-bg:   rgba(31,107,58,0.10);
+  --status-medium-bd:   rgba(31,107,58,0.45);
+  --status-low-bg:      rgba(26,74,40,0.08);
+  --status-low-bd:      rgba(26,74,40,0.30);
+}
+
+/* ── RESET ─────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+/* ── BASE ──────────────────────────────────────────────────────────────── */
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* dot-grid texture */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: radial-gradient(circle, #1a2e1c 1px, transparent 1px);
+  background-size: 26px 26px;
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 0;
+}
+
+section, header, footer, .page { position: relative; z-index: 1; }
+
+/* ── LAYOUT ────────────────────────────────────────────────────────────── */
+.page { max-width: var(--max-w); margin: 0 auto; padding: 0 2rem 6rem; }
+
+/* ── TYPOGRAPHY ────────────────────────────────────────────────────────── */
+h1, h2, h3 { font-family: var(--font-display); font-weight: 500; line-height: 1.15; letter-spacing: -0.01em; }
+h1 { font-size: clamp(2.4rem, 4.5vw, 3.8rem); }
+h2.s-title { font-size: clamp(1.7rem, 3vw, 2.4rem); margin-bottom: 1rem; }
+h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; }
+h2.s-title em, h1 em { font-style: italic; color: var(--gold); }
+.amp { color: var(--gold); font-style: italic; }
+p { margin-bottom: 1rem; color: var(--text-muted); }
+a { color: var(--green-bright); text-decoration: none; }
+
+/* ── COVER BLOCK ───────────────────────────────────────────────────────── */
+.cover {
+  min-height: 55vh;
+  padding: 7rem 0 5rem;
+  border-bottom: 1px solid var(--border-mid);
+  margin-bottom: 5rem;
+}
+.cover-eyebrow {
+  display: flex; align-items: center; gap: 0.75rem;
+  margin-bottom: 2.5rem;
+}
+.cover-bar { width: 22px; height: 1px; background: var(--gold-dim); }
+.cover-tag {
+  font-family: var(--font-mono); font-size: 0.68rem;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold);
+}
+.cover h1 { max-width: 820px; margin-bottom: 0.5rem; }
+.cover-address {
+  font-family: var(--font-mono); font-size: 0.8rem;
+  color: var(--text-dim); letter-spacing: 0.06em;
+  margin-bottom: 3rem;
+}
+.cover-meta {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.5rem 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+  max-width: 720px;
+}
+.cover-meta dt {
+  font-family: var(--font-mono); font-size: 0.62rem;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--text-dim); margin-bottom: 0.1rem;
+}
+.cover-meta dd { font-size: 0.9rem; color: var(--text); font-weight: 500; }
+.cover-brand {
+  margin-top: 3.5rem;
+  display: flex; align-items: center; gap: 0.5rem;
+  font-family: var(--font-display); font-size: 0.95rem; color: var(--text-dim);
+}
+.cover-brand-bar { width: 28px; height: 1px; background: var(--border-mid); }
+
+/* ── SECTION SHARED ────────────────────────────────────────────────────── */
+.section { padding: 5rem 0; border-bottom: 1px solid var(--border); }
+.section:last-of-type { border-bottom: none; }
+.s-eyebrow { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; }
+.s-bar { width: 22px; height: 1px; background: var(--gold-dim); }
+.s-tag { font-family: var(--font-mono); font-size: 0.67rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); }
+.s-num { font-family: var(--font-mono); font-size: 0.62rem; color: var(--text-dim); letter-spacing: 0.06em; margin-left: auto; }
+.s-lead { font-size: 1rem; color: var(--text-muted); max-width: 600px; line-height: 1.75; margin-bottom: 3rem; }
+
+/* Section hero image strip */
+.s-hero-img {
+  width: 100%; height: 280px; object-fit: cover;
+  border-radius: var(--radius); margin-bottom: 3rem;
+  border: 1px solid var(--border-mid);
+  display: block;
+}
+
+/* ── METRIC GRID ───────────────────────────────────────────────────────── */
+.metric-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1px; background: var(--border-mid); border: 1px solid var(--border-mid);
+  border-radius: var(--radius); overflow: hidden; margin-bottom: 4rem;
+}
+.metric-card { background: var(--bg-card); padding: 1.75rem 1.5rem; }
+.metric-card:hover { background: var(--bg-card-hover); }
+.metric-label { font-family: var(--font-mono); font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); margin-bottom: 0.5rem; }
+.metric-val { font-family: var(--font-display); font-size: 2rem; font-weight: 500; color: var(--gold); line-height: 1; }
+.metric-sub { font-size: 0.76rem; color: var(--text-muted); margin-top: 0.3rem; }
+
+/* ── RISK MATRIX ───────────────────────────────────────────────────────── */
+.risk-grid { display: flex; flex-direction: column; gap: 0.65rem; margin-bottom: 3rem; }
+.risk-block { padding: 1rem 1.25rem; border-left: 3px solid; border-radius: 0 var(--radius) var(--radius) 0; }
+.risk-critical { background: var(--status-critical-bg); border-color: var(--status-critical-bd); }
+.risk-high     { background: var(--status-high-bg);     border-color: var(--status-high-bd); }
+.risk-medium   { background: var(--status-medium-bg);   border-color: var(--status-medium-bd); }
+.risk-low      { background: var(--status-low-bg);      border-color: var(--status-low-bd); }
+.risk-level { font-family: var(--font-mono); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); margin-bottom: 0.25rem; }
+.risk-headline { font-weight: 600; font-size: 0.9rem; color: var(--text); margin-bottom: 0.2rem; }
+.risk-detail { font-size: 0.84rem; color: var(--text-muted); line-height: 1.65; }
+
+/* ── PULL QUOTE ────────────────────────────────────────────────────────── */
+.pull-quote {
+  padding: 1.75rem;
+  border-left: 2px solid var(--gold-dim);
+  background: rgba(200,169,110,0.04);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  margin: 3rem 0;
+}
+.pull-quote p { font-family: var(--font-display); font-style: italic; font-size: 1.1rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 0.75rem; }
+.pull-quote cite { font-family: var(--font-mono); font-size: 0.67rem; color: var(--text-dim); letter-spacing: 0.06em; text-transform: uppercase; font-style: normal; }
+
+/* ── ZONING IFRAME ─────────────────────────────────────────────────────── */
+.zoning-viewer {
+  width: 100%; height: 520px;
+  border: 1px solid var(--border-mid);
+  border-radius: var(--radius);
+  margin-bottom: 3rem;
+  background: var(--bg-surface);
+}
+
+/* ── CONTENT GRID (two-col) ─────────────────────────────────────────────── */
+.content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; margin-bottom: 3rem; }
+@media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; gap: 2.5rem; } }
+
+/* ── DATA TABLE ────────────────────────────────────────────────────────── */
+.data-table { width: 100%; border-collapse: collapse; margin-bottom: 2rem; font-size: 0.88rem; }
+.data-table th { font-family: var(--font-mono); font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--border-mid); text-align: left; }
+.data-table td { padding: 0.7rem 0.75rem; border-bottom: 1px solid var(--border); color: var(--text-muted); vertical-align: top; }
+.data-table tr:last-child td { border-bottom: none; }
+
+/* ── FOOTER ────────────────────────────────────────────────────────────── */
+.report-footer {
+  border-top: 1px solid var(--border-mid);
+  padding: 2.5rem 0;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+}
+.footer-brand { font-family: var(--font-display); font-size: 0.9rem; color: var(--text-dim); }
+.footer-meta { font-family: var(--font-mono); font-size: 0.62rem; color: var(--text-dim); letter-spacing: 0.05em; text-align: right; }
+
+/* ── PRINT ─────────────────────────────────────────────────────────────── */
+@media print {
+  body { background: #080c09; }
+  body::before { display: none; }
+  .section { page-break-inside: avoid; }
+  .cover { page-break-after: always; }
+}
+
+/* ── RESPONSIVE ─────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .cover-meta { grid-template-columns: 1fr 1fr; }
+  .metric-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- ── COVER ──────────────────────────────────────────────────────────── -->
+<div class="page">
+<div class="cover">
+  <div class="cover-eyebrow">
+    <span class="cover-bar"></span>
+    <span class="cover-tag">Property Due Diligence</span>
+  </div>
+  <h1>{{REPORT_TITLE}}<br><em>{{REPORT_SUBTITLE}}</em></h1>
+  <div class="cover-address">{{ADDRESS_FULL}}</div>
+
+  <dl class="cover-meta">
+    <div><dt>BBL</dt><dd>{{BBL}}</dd></div>
+    <div><dt>Block / Lot</dt><dd>{{BLOCK}} / {{LOT}}</dd></div>
+    <div><dt>BIN</dt><dd>{{BIN}}</dd></div>
+    <div><dt>Zoning</dt><dd>{{ZONING_DISTRICT}}</dd></div>
+    <div><dt>Lot SF</dt><dd>{{LOT_SF}}</dd></div>
+    <div><dt>Prepared for</dt><dd>{{CLIENT_NAME}}</dd></div>
+    <div><dt>Date</dt><dd>{{REPORT_DATE}}</dd></div>
+    <div><dt>Coordinates</dt><dd>{{COORDINATES}}</dd></div>
+  </dl>
+
+  <div class="cover-brand">
+    <span class="cover-brand-bar"></span>
+    Principal <span class="amp">&amp;</span> Agent
+  </div>
+</div>
+
+<!-- ── METRIC GRID ─────────────────────────────────────────────────────── -->
+<div class="metric-grid">
+  <div class="metric-card">
+    <div class="metric-label">Walk Score</div>
+    <div class="metric-val">{{WALK_SCORE}}</div>
+    <div class="metric-sub">{{WALK_SCORE_LABEL}}</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-label">Lot Area</div>
+    <div class="metric-val">{{LOT_SF_SHORT}}</div>
+    <div class="metric-sub">Square feet</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-label">Built FAR</div>
+    <div class="metric-val">{{BUILT_FAR}}</div>
+    <div class="metric-sub">of {{MAX_FAR}} max</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-label">Owner</div>
+    <div class="metric-val" style="font-size:1.1rem;">{{OWNER_SHORT}}</div>
+    <div class="metric-sub">{{OWNER_TYPE}}</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-label">Zoning</div>
+    <div class="metric-val" style="font-size:1.4rem;">{{ZONING_DISTRICT}}</div>
+    <div class="metric-sub">{{ZONING_DESCRIPTION}}</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-label">Report Date</div>
+    <div class="metric-val" style="font-size:1rem;">{{REPORT_DATE}}</div>
+    <div class="metric-sub">Principal &amp; Agent</div>
+  </div>
+</div>
+
+<!-- ── RISK MATRIX ─────────────────────────────────────────────────────── -->
+<section class="section">
+  <div class="s-eyebrow"><span class="s-bar"></span><span class="s-tag">Risk Assessment</span></div>
+  <h2 class="s-title">Key <em>risk factors</em></h2>
+  <p class="s-lead">Findings drawn from FEMA flood maps, DOB violation records, HPD registrations, regulatory overlay, and title encumbrance analysis.</p>
+
+  <div class="risk-grid">
+    <!-- CRITICAL -->
+    <div class="risk-block risk-critical">
+      <div class="risk-level">Critical</div>
+      <div class="risk-headline">{{RISK_CRITICAL_HEADLINE}}</div>
+      <div class="risk-detail">{{RISK_CRITICAL_DETAIL}}</div>
+    </div>
+    <!-- HIGH -->
+    <div class="risk-block risk-high">
+      <div class="risk-level">High</div>
+      <div class="risk-headline">{{RISK_HIGH_HEADLINE}}</div>
+      <div class="risk-detail">{{RISK_HIGH_DETAIL}}</div>
+    </div>
+    <!-- MEDIUM -->
+    <div class="risk-block risk-medium">
+      <div class="risk-level">Medium</div>
+      <div class="risk-headline">{{RISK_MEDIUM_HEADLINE}}</div>
+      <div class="risk-detail">{{RISK_MEDIUM_DETAIL}}</div>
+    </div>
+    <!-- LOW -->
+    <div class="risk-block risk-low">
+      <div class="risk-level">Low</div>
+      <div class="risk-headline">{{RISK_LOW_HEADLINE}}</div>
+      <div class="risk-detail">{{RISK_LOW_DETAIL}}</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SECTION 01: PROPERTY ─────────────────────────────────────────────── -->
+<section class="section" id="property">
+  <div class="s-eyebrow"><span class="s-bar"></span><span class="s-tag">Property</span><span class="s-num">01 / 07</span></div>
+  <img class="s-hero-img" src="data:image/png;base64,{{IMG_HERO_AERIAL}}" alt="Aerial view of {{ADDRESS_SHORT}}" />
+  <h2 class="s-title">{{PROPERTY_SECTION_TITLE}}<br><em>{{PROPERTY_SECTION_SUBTITLE}}</em></h2>
+  <p class="s-lead">{{PROPERTY_LEAD}}</p>
+  {{PROPERTY_BODY}}
+</section>
+
+<!-- ── SECTION 02: ZONING ─────────────────────────────────────────────── -->
+<section class="section" id="zoning">
+  <div class="s-eyebrow"><span class="s-bar"></span><span class="s-tag">Zoning</span><span class="s-num">02 / 07</span></div>
+  <img class="s-hero-img" src="data:image/png;base64,{{IMG_URBAN_CONTEXT}}" alt="Urban context — {{ADDRESS_SHORT}}" />
+  <h2 class="s-title">{{ZONING_SECTION_TITLE}}<br><em>{{ZONING_SECTION_SUBTITLE}}</em></h2>
+  <p class="s-lead">{{ZONING_LEAD}}</p>
+  {{ZONING_BODY}}
+
+  <!-- 3D Zoning Envelope Viewer -->
+  <iframe class="zoning-viewer" src="{{ZONING_ENVELOPE_PATH}}" title="3D Zoning Envelope — {{ADDRESS_SHORT}}"></iframe>
+</section>
+
+<!-- ── SECTION 03: ENVIRONMENTAL ─────────────────────────────────────── -->
+<section class="section" id="environmental">
+  <div class="s-eyebrow"><span class="s-bar"></span><span class="s-tag">Environmental</span><span class="s-num">03 / 07</span></div>
+  <img class="s-hero-img" src="data:image/png;base64,{{IMG_RISK_DIAGRAM}}" alt="Risk diagram — {{ADDRESS_SHORT}}" />
+  <h2 class="s-title">{{ENV_SECTION_TITLE}}<br><em>{{ENV_SECTION_SUBTITLE}}</em></h2>
+  <p class="s-lead">{{ENV_LEAD}}</p>
+  {{ENV_BODY}}
+</section>
+
+<!-- ── SECTION 04: MOBILITY ───────────────────────────────────────────── -->
+<section class="section" id="mobility">
+  <div class="s-eyebrow"><span class="s-bar"></span><span class="s-tag">Mobility</span><span class="s-num">04 / 07</span></div>
+  <img class="s-hero-img" src="data:image/png;base64,{{IMG_SUNSET_VIEWSHED}}" alt="Context viewshed — {{ADDRESS_SHORT}}" />
+  <h2 class="s-title">{{MOB_SECTION_TITLE}}<br><em>{{MOB_SECTION_SUBTITLE}}</em></h2>
+  <p class="s-lead">{{MOB_LEAD}}</p>
+  {{MOB_BODY}}
+</section>
+
+<!-- ── SECTION 05: DEMOGRAPHICS ───────────────────────────────────────── -->
+<section class="section" id="demographics">
+  <div class="s-eyebrow"><span class="s-bar"></span><span class="s-tag">Demographics</span><span class="s-num">05 / 07</span></div>
+  <h2 class="s-title">{{DEMO_SECTION_TITLE}}<br><em>{{DEMO_SECTION_SUBTITLE}}</em></h2>
+  <p class="s-lead">{{DEMO_LEAD}}</p>
+  {{DEMO_BODY}}
+</section>
+
+<!-- ── SECTION 06: HISTORY ───────────────────────────────────────────── -->
+<section class="section" id="history">
+  <div class="s-eyebrow"><span class="s-bar"></span><span class="s-tag">History</span><span class="s-num">06 / 07</span></div>
+  <img class="s-hero-img" src="data:image/png;base64,{{IMG_EXISTING_CONDITION}}" alt="Existing condition — {{ADDRESS_SHORT}}" />
+  <h2 class="s-title">{{HIST_SECTION_TITLE}}<br><em>{{HIST_SECTION_SUBTITLE}}</em></h2>
+  <p class="s-lead">{{HIST_LEAD}}</p>
+  {{HIST_BODY}}
+</section>
+
+<!-- ── SECTION 07: BRIEF ──────────────────────────────────────────────── -->
+<section class="section" id="brief">
+  <div class="s-eyebrow"><span class="s-bar"></span><span class="s-tag">Brief</span><span class="s-num">07 / 07</span></div>
+  <h2 class="s-title">{{BRIEF_SECTION_TITLE}}<br><em>{{BRIEF_SECTION_SUBTITLE}}</em></h2>
+  <p class="s-lead">{{BRIEF_LEAD}}</p>
+  {{BRIEF_BODY}}
+
+  <!-- Closing pull quote (CFO line or equivalent) -->
+  <div class="pull-quote">
+    <p>"{{CLOSING_QUOTE}}"</p>
+    <cite>— {{CLOSING_QUOTE_ATTRIBUTION}}</cite>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────────────────────── -->
+<footer class="report-footer">
+  <div class="footer-brand">Principal <span class="amp">&amp;</span> Agent</div>
+  <div class="footer-meta">
+    Prepared for {{CLIENT_NAME}} · {{REPORT_DATE}}<br>
+    Confidential — not for redistribution
+  </div>
+</footer>
+</div><!-- /.page -->
+
+</body>
+</html>

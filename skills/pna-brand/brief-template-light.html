@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{{BRIEF_TITLE}} — Principal &amp; Agent</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+/* ── TOKENS ─────────────────────────────────────────────────────────────── */
+:root {
+  --bg:           #e8e3d5;
+  --bg-surface:   #ddd8ca;
+  --bg-card:      #d8d2c2;
+  --bg-card-alt:  #cdc7b6;
+  --border:       rgba(31,107,58,0.12);
+  --border-mid:   rgba(31,107,58,0.20);
+  --border-gold:  rgba(184,144,80,0.40);
+  --text:         #0e1a10;
+  --text-muted:   #4a4238;
+  --text-dim:     #8a7e6a;
+  --green:        #1f6b3a;
+  --gold:         #b89050;
+  --gold-bright:  #c8a96e;
+  --gold-dim:     #7a6540;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+  --radius:       2px;
+  /* page dimensions: 16:9 */
+  --pw: 1280px;
+  --ph: 720px;
+}
+
+/* ── RESET ─────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── SCREEN: scrollable pages ───────────────────────────────────────────── */
+html { background: #1a1a18; }
+body {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 12px; padding: 24px;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── PAGE BASE ──────────────────────────────────────────────────────────── */
+.page {
+  position: relative;
+  width: var(--pw); height: var(--ph);
+  background: var(--bg);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* dot-grid texture */
+.page::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle, #b8aa8a 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: 0.45;
+  pointer-events: none;
+  z-index: 0;
+}
+.page > * { position: relative; z-index: 1; }
+
+/* ── PAGE CHROME ────────────────────────────────────────────────────────── */
+.page-header {
+  position: absolute; top: 0; left: 0; right: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 26px 56px 0;
+  border-bottom: 1px solid var(--border-mid);
+  padding-bottom: 16px;
+}
+.brand-mark {
+  font-family: var(--font-display); font-size: 1rem; font-weight: 400;
+  color: var(--text); letter-spacing: -0.01em;
+}
+.brand-mark em { font-style: italic; color: var(--text); }
+.page-context {
+  font-family: var(--font-mono); font-size: 0.6rem;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim);
+}
+
+.page-footer {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 56px 20px;
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+}
+.footer-left {
+  font-family: var(--font-mono); font-size: 0.55rem;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim);
+}
+.footer-right {
+  font-family: var(--font-mono); font-size: 0.55rem;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim);
+}
+
+/* ── INNER CONTENT AREA ─────────────────────────────────────────────────── */
+/* All pages have the same chrome. Inner sits between header (~72px) and footer (~52px) */
+.inner {
+  position: absolute;
+  top: 72px; bottom: 52px; left: 56px; right: 56px;
+  display: flex; flex-direction: column; justify-content: center;
+}
+
+/* ── SHARED COMPONENTS ──────────────────────────────────────────────────── */
+.eyebrow {
+  font-family: var(--font-mono); font-size: 0.6rem;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--green);
+  margin-bottom: 1.25rem;
+}
+.amp { font-style: italic; }
+
+/* Large Playfair headline — upright main, italic gold punchline */
+.headline {
+  font-family: var(--font-display); font-weight: 400;
+  font-size: clamp(2.8rem, 5.5vw, 4.2rem);
+  letter-spacing: -0.02em; line-height: 1.05;
+  color: var(--text); margin-bottom: 1.5rem;
+}
+.headline em { font-style: italic; color: var(--gold-bright); }
+
+.rule { width: 100%; height: 1px; background: var(--border-mid); margin: 1.25rem 0; }
+
+.body-large {
+  font-size: 1rem; line-height: 1.75; color: var(--text-muted);
+  max-width: 820px; margin-bottom: 1rem;
+}
+.body-italic {
+  font-family: var(--font-display); font-style: italic;
+  font-size: 1rem; color: var(--text-muted); line-height: 1.75;
+  max-width: 960px;
+}
+
+/* ── LAYOUT: STATEMENT ──────────────────────────────────────────────────── */
+/* headline fills most of the page, body + italic below rule */
+.layout-statement .headline { font-size: clamp(3rem, 5.8vw, 4.6rem); max-width: 900px; }
+
+/* ── LAYOUT: STAT CARDS (3-up) ──────────────────────────────────────────── */
+.stat-row {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 12px; margin-bottom: 1.5rem;
+}
+.stat-card {
+  background: var(--bg-card); padding: 2rem 1.75rem;
+  border-radius: var(--radius);
+}
+.stat-num {
+  font-family: var(--font-display); font-weight: 400;
+  font-size: 3.2rem; color: var(--gold); line-height: 1;
+  letter-spacing: -0.02em;
+}
+.stat-unit {
+  font-family: var(--font-display); font-weight: 400;
+  font-size: 1.4rem; color: var(--gold); margin-left: 0.2rem;
+}
+.stat-label {
+  font-family: var(--font-mono); font-size: 0.55rem;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim);
+  margin-top: 0.5rem;
+}
+.output-row {
+  display: flex; gap: 1rem; align-items: flex-start;
+}
+.output-tag {
+  font-family: var(--font-mono); font-size: 0.58rem;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--green);
+  flex-shrink: 0; padding-top: 0.15rem;
+}
+.output-body {
+  font-size: 0.92rem; color: var(--text-muted); line-height: 1.7;
+}
+.output-body em { font-family: var(--font-display); font-style: italic; color: var(--text); }
+
+/* ── LAYOUT: TWO COLUMN CARDS ───────────────────────────────────────────── */
+.two-col-cards {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 12px; flex: 1;
+}
+.content-card {
+  background: var(--bg-card); padding: 1.75rem 2rem;
+  border-radius: var(--radius);
+}
+.card-eyebrow {
+  font-family: var(--font-mono); font-size: 0.55rem;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold);
+  margin-bottom: 1rem;
+}
+.card-list {
+  list-style: none; display: flex; flex-direction: column; gap: 0.5rem;
+}
+.card-list li {
+  font-size: 0.82rem; color: var(--text-muted); line-height: 1.5;
+  padding-left: 0.85rem; position: relative;
+}
+.card-list li::before {
+  content: '·'; position: absolute; left: 0; color: var(--gold);
+}
+.card-list li strong { color: var(--text); font-weight: 600; }
+.card-list li em { font-style: italic; color: var(--text-muted); }
+
+/* ── LAYOUT: BIG NUMBER COMPARISON ─────────────────────────────────────── */
+.comparison-row {
+  display: flex; align-items: flex-end; gap: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+.comparison-primary .comp-num {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 8rem; color: var(--gold); line-height: 0.85;
+  letter-spacing: -0.04em;
+}
+.comparison-vs {
+  font-family: var(--font-display); font-style: italic;
+  font-size: 1.5rem; color: var(--text-dim); padding-bottom: 1rem;
+}
+.comparison-secondary .comp-num {
+  font-family: var(--font-display); font-weight: 400;
+  font-size: 4.5rem; color: var(--text); line-height: 0.9;
+  letter-spacing: -0.03em;
+}
+.comp-label {
+  font-family: var(--font-mono); font-size: 0.55rem;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim);
+  margin-top: 0.5rem;
+}
+
+/* ── LAYOUT: THREE CARDS ────────────────────────────────────────────────── */
+.three-cards {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.numbered-card {
+  background: var(--bg-card); padding: 1.75rem 1.75rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-gold);
+}
+.card-num {
+  font-family: var(--font-mono); font-size: 0.58rem;
+  color: var(--gold-dim); letter-spacing: 0.08em;
+  margin-bottom: 0.75rem;
+}
+.card-title {
+  font-family: var(--font-display); font-size: 1.3rem; font-weight: 500;
+  color: var(--text); line-height: 1.2; margin-bottom: 0.75rem;
+}
+.card-body {
+  font-size: 0.82rem; color: var(--text-muted); line-height: 1.65;
+}
+.card-body em { font-style: italic; color: var(--text); }
+.card-body a, .card-body .highlight { color: var(--gold); font-weight: 600; font-style: normal; }
+
+/* ── LAYOUT: CLOSING / LIMIT ────────────────────────────────────────────── */
+/* same as statement but with three-cards below */
+.layout-closing .headline { font-size: clamp(2.6rem, 4.8vw, 3.8rem); max-width: 820px; margin-bottom: 0.75rem; }
+.layout-closing .body-italic { margin-bottom: 1.5rem; }
+
+/* ── PRINT ─────────────────────────────────────────────────────────────── */
+@media print {
+  @page { size: 1280px 720px landscape; margin: 0; }
+  html { background: var(--bg); padding: 0; }
+  body { padding: 0; gap: 0; background: var(--bg); }
+  .page {
+    width: 1280px; height: 720px;
+    page-break-after: always;
+    flex-shrink: 0;
+  }
+  .page:last-child { page-break-after: avoid; }
+  .page::before { opacity: 0.45; }
+}
+
+/* screen: scale pages to fit viewport if narrow */
+@media screen and (max-width: 1340px) {
+  body { padding: 12px; gap: 8px; }
+  .page { transform-origin: top left; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- PAGE 01: STATEMENT / PIVOT                                             -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<div class="page layout-statement">
+  <header class="page-header">
+    <div class="brand-mark">Principal <em>&amp;</em> Agent</div>
+    <div class="page-context">{{BRIEF_CONTEXT}} · {{BRIEF_DATE}}</div>
+  </header>
+
+  <div class="inner">
+    <div class="eyebrow">{{P1_EYEBROW}}</div>
+    <h1 class="headline">{{P1_HEADLINE_MAIN}}<br><em>{{P1_HEADLINE_EM}}</em></h1>
+    <div class="rule"></div>
+    <p class="body-large">{{P1_BODY}}</p>
+    <p class="body-italic">{{P1_ITALIC}}</p>
+  </div>
+
+  <footer class="page-footer">
+    <div class="footer-left">Principal &amp; Agent · {{BRIEF_CONTEXT}} · 01 / {{TOTAL_PAGES}}</div>
+    <div class="footer-right">Confidential · {{CLIENT_NAME}}</div>
+  </footer>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- PAGE 02: THE ARTIFACT — BIG STATS                                      -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <header class="page-header">
+    <div class="brand-mark">Principal <em>&amp;</em> Agent</div>
+    <div class="page-context">{{P2_HEADER_CONTEXT}}</div>
+  </header>
+
+  <div class="inner">
+    <div class="eyebrow">{{P2_EYEBROW}}</div>
+    <h2 class="headline" style="font-size:3rem;margin-bottom:1.25rem;">{{P2_HEADLINE_MAIN}}<br><em>{{P2_HEADLINE_EM}}</em></h2>
+
+    <div class="stat-row">
+      <div class="stat-card">
+        <div><span class="stat-num">{{STAT_1_NUM}}</span><span class="stat-unit">{{STAT_1_UNIT}}</span></div>
+        <div class="stat-label">{{STAT_1_LABEL}}</div>
+      </div>
+      <div class="stat-card">
+        <div><span class="stat-num">{{STAT_2_NUM}}</span><span class="stat-unit">{{STAT_2_UNIT}}</span></div>
+        <div class="stat-label">{{STAT_2_LABEL}}</div>
+      </div>
+      <div class="stat-card">
+        <div><span class="stat-num">{{STAT_3_NUM}}</span><span class="stat-unit">{{STAT_3_UNIT}}</span></div>
+        <div class="stat-label">{{STAT_3_LABEL}}</div>
+      </div>
+    </div>
+
+    <div class="output-row">
+      <span class="output-tag">Output</span>
+      <p class="output-body">{{P2_OUTPUT_BODY}}</p>
+    </div>
+    <p class="body-italic" style="margin-top:0.75rem;">{{P2_ITALIC}}</p>
+  </div>
+
+  <footer class="page-footer">
+    <div class="footer-left">Principal &amp; Agent · {{BRIEF_CONTEXT}} · 02 / {{TOTAL_PAGES}}</div>
+    <div class="footer-right">Confidential · {{CLIENT_NAME}}</div>
+  </footer>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- PAGE 03: TWO COLUMN — WHAT / WHERE                                     -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <header class="page-header">
+    <div class="brand-mark">Principal <em>&amp;</em> Agent</div>
+    <div class="page-context">{{P3_HEADER_CONTEXT}}</div>
+  </header>
+
+  <div class="inner" style="justify-content:flex-start;padding-top:0.5rem;">
+    <div class="eyebrow">{{P3_EYEBROW}}</div>
+    <h2 class="headline" style="font-size:3rem;margin-bottom:1.25rem;">{{P3_HEADLINE_MAIN}} <em>{{P3_HEADLINE_EM}}</em></h2>
+
+    <div class="two-col-cards" style="flex:1;max-height:340px;">
+      <div class="content-card">
+        <div class="card-eyebrow">{{P3_COL1_EYEBROW}}</div>
+        <ul class="card-list">
+          <li>{{P3_COL1_ITEM_1}}</li>
+          <li>{{P3_COL1_ITEM_2}}</li>
+          <li>{{P3_COL1_ITEM_3}}</li>
+          <li>{{P3_COL1_ITEM_4}}</li>
+          <li>{{P3_COL1_ITEM_5}}</li>
+          <li>{{P3_COL1_ITEM_6}}</li>
+          <li>{{P3_COL1_ITEM_7}}</li>
+        </ul>
+      </div>
+      <div class="content-card">
+        <div class="card-eyebrow">{{P3_COL2_EYEBROW}}</div>
+        <ul class="card-list">
+          <li><strong>{{P3_COL2_SOURCE_1_NAME}}</strong> <em>{{P3_COL2_SOURCE_1_DESC}}</em></li>
+          <li><strong>{{P3_COL2_SOURCE_2_NAME}}</strong> <em>{{P3_COL2_SOURCE_2_DESC}}</em></li>
+          <li><strong>{{P3_COL2_SOURCE_3_NAME}}</strong> <em>{{P3_COL2_SOURCE_3_DESC}}</em></li>
+          <li><strong>{{P3_COL2_SOURCE_4_NAME}}</strong> <em>{{P3_COL2_SOURCE_4_DESC}}</em></li>
+          <li><strong>{{P3_COL2_SOURCE_5_NAME}}</strong> <em>{{P3_COL2_SOURCE_5_DESC}}</em></li>
+          <li><strong>{{P3_COL2_SOURCE_6_NAME}}</strong> <em>{{P3_COL2_SOURCE_6_DESC}}</em></li>
+          <li><strong>{{P3_COL2_SOURCE_7_NAME}}</strong> <em>{{P3_COL2_SOURCE_7_DESC}}</em></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <footer class="page-footer">
+    <div class="footer-left">Principal &amp; Agent · {{BRIEF_CONTEXT}} · 03 / {{TOTAL_PAGES}}</div>
+    <div class="footer-right">Confidential · {{CLIENT_NAME}}</div>
+  </footer>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- PAGE 04: BIG NUMBER COMPARISON                                         -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <header class="page-header">
+    <div class="brand-mark">Principal <em>&amp;</em> Agent</div>
+    <div class="page-context">{{P4_HEADER_CONTEXT}}</div>
+  </header>
+
+  <div class="inner">
+    <div class="eyebrow">{{P4_EYEBROW}}</div>
+    <h2 class="headline" style="font-size:3rem;margin-bottom:1.25rem;">{{P4_HEADLINE_MAIN}} <em>{{P4_HEADLINE_EM}}</em></h2>
+
+    <div class="comparison-row">
+      <div class="comparison-primary">
+        <div class="comp-num">{{COMP_PRIMARY_NUM}}</div>
+        <div class="comp-label">{{COMP_PRIMARY_LABEL}}</div>
+      </div>
+      <div class="comparison-vs">vs</div>
+      <div class="comparison-secondary">
+        <div class="comp-num">{{COMP_SECONDARY_NUM}}</div>
+        <div class="comp-label">{{COMP_SECONDARY_LABEL}}</div>
+      </div>
+    </div>
+
+    <p class="body-italic">{{P4_ITALIC}}</p>
+  </div>
+
+  <footer class="page-footer">
+    <div class="footer-left">Principal &amp; Agent · {{BRIEF_CONTEXT}} · 04 / {{TOTAL_PAGES}}</div>
+    <div class="footer-right">Confidential · {{CLIENT_NAME}}</div>
+  </footer>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- PAGE 05: THREE CARDS — SECOND ORDER EFFECTS                            -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <header class="page-header">
+    <div class="brand-mark">Principal <em>&amp;</em> Agent</div>
+    <div class="page-context">{{P5_HEADER_CONTEXT}}</div>
+  </header>
+
+  <div class="inner">
+    <div class="eyebrow">{{P5_EYEBROW}}</div>
+    <h2 class="headline" style="font-size:3rem;margin-bottom:0.75rem;">{{P5_HEADLINE_MAIN}} <em>{{P5_HEADLINE_EM}}</em></h2>
+    <p class="body-italic" style="margin-bottom:1.25rem;">{{P5_BODY_ITALIC}}</p>
+
+    <div class="three-cards">
+      <div class="numbered-card">
+        <div class="card-num">01</div>
+        <div class="card-title">{{P5_CARD1_TITLE}}</div>
+        <p class="card-body">{{P5_CARD1_BODY}}</p>
+      </div>
+      <div class="numbered-card">
+        <div class="card-num">02</div>
+        <div class="card-title">{{P5_CARD2_TITLE}}</div>
+        <p class="card-body">{{P5_CARD2_BODY}}</p>
+      </div>
+      <div class="numbered-card">
+        <div class="card-num">03</div>
+        <div class="card-title">{{P5_CARD3_TITLE}}</div>
+        <p class="card-body">{{P5_CARD3_BODY}}</p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="page-footer">
+    <div class="footer-left">Principal &amp; Agent · {{BRIEF_CONTEXT}} · 05 / {{TOTAL_PAGES}}</div>
+    <div class="footer-right">Confidential · {{CLIENT_NAME}}</div>
+  </footer>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- PAGE 06: CLOSING — BOUNDARY / HONEST ABOUT LIMITS                      -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<div class="page layout-closing">
+  <header class="page-header">
+    <div class="brand-mark">Principal <em>&amp;</em> Agent</div>
+    <div class="page-context">{{P6_HEADER_CONTEXT}}</div>
+  </header>
+
+  <div class="inner">
+    <div class="eyebrow">{{P6_EYEBROW}}</div>
+    <h2 class="headline">{{P6_HEADLINE_MAIN}} <em>{{P6_HEADLINE_EM}}</em></h2>
+    <p class="body-italic" style="margin-bottom:1.5rem;">{{P6_BODY_ITALIC}}</p>
+
+    <div class="three-cards">
+      <div class="numbered-card">
+        <div class="card-title">{{P6_CARD1_TITLE}}</div>
+        <p class="card-body">{{P6_CARD1_BODY}}</p>
+      </div>
+      <div class="numbered-card">
+        <div class="card-title">{{P6_CARD2_TITLE}}</div>
+        <p class="card-body">{{P6_CARD2_BODY}}</p>
+      </div>
+      <div class="numbered-card">
+        <div class="card-title">{{P6_CARD3_TITLE}}</div>
+        <p class="card-body">{{P6_CARD3_BODY}}</p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="page-footer">
+    <div class="footer-left">Principal &amp; Agent · {{BRIEF_CONTEXT}} · 06 / {{TOTAL_PAGES}}</div>
+    <div class="footer-right">{{P6_FOOTER_NOTE}}</div>
+  </footer>
+</div>
+
+<!-- ── SCREEN SCALING ──────────────────────────────────────────────────── -->
+<script>
+(function() {
+  function scale() {
+    const vw = window.innerWidth - 48;
+    if (vw < 1280) {
+      const s = vw / 1280;
+      document.querySelectorAll('.page').forEach(p => {
+        p.style.transform = 'scale(' + s + ')';
+        p.style.marginBottom = -(720 * (1 - s)) + 'px';
+      });
+    }
+  }
+  scale();
+  window.addEventListener('resize', scale);
+})();
+</script>
+</body>
+</html>

@@ -24,7 +24,8 @@ library:
 
     - name: source-comparison
       description: Grounded comparison matrix across tools, papers, frameworks, or approaches.
-      source: ~/dev/projects/rnd/skills/feynman/source-comparison/skill.md
+      source: ~/dev/projects/pna-library/skills/source-comparison/skill.md
+      # retired 2026-07-08 (Tier-1 de-list, Q3 audit): deactivated from ~/.claude/skills/, restore with /library use source-comparison
 
     - name: literature-review
       description: Comprehensive academic literature review with synthesis and consensus mapping.
@@ -32,7 +33,8 @@ library:
 
     - name: novelty-check
       description: Verify whether a research idea or approach is genuinely novel against recent literature.
-      source: ~/dev/projects/rnd/skills/aris/novelty-check/skill.md
+      source: ~/dev/projects/pna-library/skills/novelty-check/skill.md
+      # retired 2026-07-08 (Tier-1 de-list, Q3 audit): deactivated from ~/.claude/skills/, restore with /library use novelty-check
 
     - name: peer-review
       description: Simulate tough peer review of any research artifact — paper, draft, proposal, report.
@@ -104,6 +106,7 @@ library:
     - name: repolens
       description: Repo intelligence via Repolens CLI. Use when you need to orient on a codebase, audit a repo, answer "what does this codebase do", run code analysis, or prepare for a refactor without dumping the entire source into context. Triggers on "analyze this repo", "orient on codebase", "audit repo", "code intelligence", "refactor prep".
       source: ~/dev/projects/pna-library/skills/repolens/SKILL.md
+      # retired 2026-07-08 (Tier-1 de-list, Q3 audit): repolens CLI not on PATH (dependency rot). Restore with /library use repolens after installing the CLI
 
     - name: spec-driven-development
       description: Write a spec before coding starts. Use when requirements are unclear or unstated.
@@ -127,7 +130,8 @@ library:
 
     - name: systematic-debugging
       description: Root-cause before fixes. Use when encountering any bug or unexpected behavior.
-      source: ~/.claude/skills/systematic-debugging/SKILL.md
+      source: ~/dev/projects/pna-library/skills/systematic-debugging/SKILL.md
+      # retired 2026-07-08 (Tier-1 de-list, Q3 audit): ~90% overlap with debugging-and-error-recovery, 0 invocations. Restore with /library use systematic-debugging
 
     - name: requesting-code-review
       description: Dispatch a code reviewer subagent. Use after completing a task or major feature.
@@ -173,9 +177,10 @@ library:
     - name: grill-me
       description: Relentless Socratic interview that stress-tests a plan or design by walking every branch of the decision tree. Use when the user wants to stress-test a plan, get grilled on their design, challenge their assumptions, or says "grill me".
       source: ~/dev/projects/pna-library/skills/grill-me/SKILL.md
+      # retired 2026-07-08 (Tier-1 de-list, Q3 audit): merged into grill-with-docs ("grill me" trigger preserved there). Restore with /library use grill-me
 
     - name: grill-with-docs
-      description: Grilling session that challenges a plan against the project domain model, sharpens terminology, and updates CONTEXT.md and ADRs inline as decisions crystallise. Use when the user wants to stress-test a plan against their project's language and documented decisions, or says "grill me with docs".
+      description: Relentless Socratic grilling session that stress-tests a plan or design, challenges it against the project domain model, sharpens terminology, and updates CONTEXT.md and ADRs inline as decisions crystallise. Use when the user wants to stress-test a plan, get grilled on their design, challenge their assumptions, or says "grill me" or "grill me with docs". Absorbed grill-me 2026-07-08.
       source: ~/dev/projects/pna-library/skills/grill-with-docs/SKILL.md
 
     # ── Engineering Practices (agent-skills — Addy Osmani) ──────────────────
@@ -276,7 +281,8 @@ library:
 
     - name: vertex-ai-api-dev
       description: Use Gemini on Google Cloud Vertex AI. Enterprise environments, Gen AI SDK.
-      source: ~/.claude/skills/vertex-ai-api-dev/skill.md
+      source: ~/dev/projects/pna-library/skills/vertex-ai-api-dev/skill.md
+      # retired 2026-07-08 (Tier-1 de-list, Q3 audit): orphan, no GCP Vertex work in fleet, overlaps gemini-interactions-api. Restore with /library use vertex-ai-api-dev
 
     # ── Multi-Agent & Orchestration ──────────────────────────────────────────
     - name: dispatching-parallel-agents
@@ -328,7 +334,8 @@ library:
 
     - name: session-log
       description: Write a durable session log capturing completed work, findings, open questions, next steps.
-      source: ~/dev/projects/rnd/skills/feynman/session-log/skill.md
+      source: ~/dev/projects/pna-library/skills/session-log/skill.md
+      # retired 2026-07-08 (Tier-1 de-list, Q3 audit): session/handoff sprawl, covered by tldr + agent-session-summary. Restore with /library use session-log
 
     - name: session-search
       description: Search past session transcripts and logs to recover prior work and decisions.
@@ -378,7 +385,8 @@ library:
 
     - name: idea-discovery
       description: Full idea discovery pipeline — survey field, generate ideas, check novelty, refine.
-      source: ~/dev/projects/rnd/skills/aris/idea-discovery/skill.md
+      source: ~/dev/projects/pna-library/skills/idea-discovery/skill.md
+      # retired 2026-07-08 (Tier-1 de-list, Q3 audit): ~75% overlap with idea-refine + novelty-check. Restore with /library use idea-discovery
 
     - name: auto-review-loop
       description: Autonomous multi-round review and improvement loop until quality threshold is met.
@@ -581,6 +589,39 @@ library:
     - name: youtube-data
       description: Retrieve YouTube data via the YouTube Data API — video search, channel details, transcripts, comments, trends. Requires YOUTUBE_API_KEY and uv.
       source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/youtube-data/SKILL.md
+
+    # ── Reconciliation 2026-07-08 (active skills previously uncatalogued) ────
+    - name: agent-browser
+      description: Browser automation CLI for AI agents. Use when interacting with websites — navigate pages, fill forms, click buttons, take screenshots, extract data, test web apps. Also automates Electron desktop apps (VS Code, Slack, Figma, Notion) and cloud browsers (Vercel Sandbox, AWS Bedrock AgentCore). Prefer over built-in browser tools.
+      source: ~/dev/projects/pna-library/skills/agent-browser/SKILL.md
+
+    - name: banana-squad
+      description: 5-agent image generation pipeline powered by the Gemini 3 Pro Image API (Nano Banana Pro). Use when generating professional-quality images — hero images, infographics, presentation graphics, brand assets. Triggers on "generate an image", "banana squad", "make a hero image".
+      source: ~/dev/projects/pna-library/skills/banana-squad/SKILL.md
+
+    - name: cut-release
+      description: Cut a dated/named release snapshot of a git repo into a bare remote under ~/dev/github-dated so deployments clone from a frozen, self-identifying version. Triggers on "cut a release", "snapshot [repo]", "freeze this version", "tag today's build".
+      source: ~/dev/projects/pna-library/skills/cut-release/SKILL.md
+
+    - name: excalidraw-diagram
+      description: Create Excalidraw diagram JSON files that make visual arguments. Use when the user wants to visualize workflows, architectures, or concepts. Offline render pipeline vendored (esbuild bundle + fonts); Python deps rebuild via uv from pyproject.toml/uv.lock (.venv not stored).
+      source: ~/dev/projects/pna-library/skills/excalidraw-diagram/SKILL.md
+
+    - name: pna-brand
+      description: Principal & Agent brand system — palette, typography, logo usage, artifact styling. Use when producing any client-facing or published P&A artifact that must carry the brand.
+      source: ~/dev/projects/pna-library/skills/pna-brand/SKILL.md
+
+    - name: visual-explainer
+      description: Generate beautiful, self-contained HTML pages that visually explain systems, code changes, plans, and data. Use when asked for a diagram, architecture overview, diff review, plan review, project recap, or comparison table. Snapshot of upstream at ~/dev/external/visual-explainer (active install symlinks there).
+      source: ~/dev/projects/pna-library/skills/visual-explainer/SKILL.md
+
+    - name: web-design-guidelines
+      description: Review UI code for Web Interface Guidelines compliance. Use when asked to "review my UI", "check accessibility", "audit design", "review UX", or "check my site against best practices".
+      source: ~/dev/projects/pna-library/skills/web-design-guidelines/SKILL.md
+
+    - name: wrap
+      description: End-of-session summary and publish. Runs agent-session-summary to save a local handoff file, then publishes the session to pna-sessions and optionally notifies via Telegram. Invoke with /wrap at the end of any session. (Also listed under prompts; this is the skill implementation.)
+      source: ~/dev/projects/pna-library/skills/wrap/SKILL.md
 
   agents:
 

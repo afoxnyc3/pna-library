@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{{DECK_TITLE}} — Principal &amp; Agent</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+/* ── TOKENS (bone/light theme) ─────────────────────────────────────────── */
+:root {
+  --bg:           #e8e3d5;
+  --bg-surface:   #ddd8ca;
+  --bg-card:      #f0ebe0;
+  --bg-card-hover:#e8e1d2;
+  --border:       rgba(31,107,58,0.14);
+  --border-mid:   rgba(31,107,58,0.22);
+  --border-bright:rgba(31,107,58,0.38);
+  --text:         #0e1a10;
+  --text-muted:   #4a4238;
+  --text-dim:     #8a7e6a;
+  --green:        #1f6b3a;
+  --green-mid:    #267d46;
+  --green-bright: #2e9453;
+  --gold:         #b89050;
+  --gold-bright:  #c8a96e;
+  --gold-dim:     #7a6540;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+  --radius:       2px;
+}
+
+/* ── RESET ─────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── DECK SHELL ─────────────────────────────────────────────────────────── */
+html, body {
+  width: 100%; height: 100%;
+  background: #0e1410;
+  overflow: hidden;
+}
+
+/* screen mode: slides fill viewport, letterboxed */
+.deck-stage {
+  width: 100vw; height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ── SLIDE BASE ─────────────────────────────────────────────────────────── */
+.slide {
+  position: absolute;
+  width: 1280px; height: 720px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  display: none;
+  flex-direction: column;
+  transform-origin: top left;
+}
+.slide.active { display: flex; }
+
+/* dot-grid texture */
+.slide::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle, #b8aa8a 1px, transparent 1px);
+  background-size: 26px 26px;
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 0;
+}
+.slide > * { position: relative; z-index: 1; }
+
+/* ── SHARED COMPONENTS ──────────────────────────────────────────────────── */
+.s-eyebrow {
+  display: flex; align-items: center; gap: 0.6rem;
+  margin-bottom: 1.2rem;
+}
+.s-bar { width: 18px; height: 1px; background: var(--gold-dim); flex-shrink: 0; }
+.s-tag {
+  font-family: var(--font-mono); font-size: 0.6rem;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold);
+}
+.s-num {
+  font-family: var(--font-mono); font-size: 0.58rem;
+  color: var(--text-dim); letter-spacing: 0.06em; margin-left: auto;
+}
+.amp { color: var(--gold-bright); font-style: italic; }
+
+h1, h2, h3 { font-family: var(--font-display); font-weight: 500; line-height: 1.15; letter-spacing: -0.01em; }
+h1 em, h2 em { font-style: italic; color: var(--gold-bright); }
+p { color: var(--text-muted); line-height: 1.65; }
+
+/* ── SLIDE PADDING ──────────────────────────────────────────────────────── */
+.slide-inner { padding: 56px 80px; width: 100%; height: 100%; display: flex; flex-direction: column; }
+.slide-inner-center { padding: 56px 80px; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; }
+
+/* ── SLIDE FOOTER BAR ───────────────────────────────────────────────────── */
+.slide-footer {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.slide-footer-brand { font-family: var(--font-display); font-size: 0.75rem; color: var(--text-dim); }
+.slide-footer-meta { font-family: var(--font-mono); font-size: 0.55rem; color: var(--text-dim); letter-spacing: 0.06em; }
+.slide-footer-num { font-family: var(--font-mono); font-size: 0.55rem; color: var(--text-dim); }
+
+/* ── SLIDE TYPE: COVER ──────────────────────────────────────────────────── */
+.slide-cover .cover-inner {
+  padding: 56px 80px;
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.cover-eyebrow { display: flex; align-items: center; gap: 0.6rem; }
+.cover-bar { width: 18px; height: 1px; background: var(--gold-dim); }
+.cover-tag { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); }
+.cover-h1 { font-family: var(--font-display); font-size: clamp(2.6rem, 4vw, 3.4rem); font-weight: 500; letter-spacing: -0.02em; line-height: 1.1; color: var(--text); margin: 0; }
+.cover-h1 em { font-style: italic; color: var(--gold-bright); }
+.cover-sub { font-family: var(--font-body); font-size: 1rem; color: var(--text-muted); margin-top: 0.85rem; max-width: 560px; line-height: 1.65; }
+.cover-divider { width: 40px; height: 1px; background: var(--border-mid); margin: 2rem 0; }
+.cover-meta-row { display: flex; align-items: center; gap: 3rem; }
+.cover-meta-item dt { font-family: var(--font-mono); font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); margin-bottom: 0.15rem; }
+.cover-meta-item dd { font-family: var(--font-body); font-size: 0.82rem; color: var(--text); font-weight: 500; }
+.cover-brand-row { display: flex; align-items: center; gap: 0.5rem; }
+.cover-brand-bar { width: 22px; height: 1px; background: var(--border-mid); }
+.cover-brand-name { font-family: var(--font-display); font-size: 0.85rem; color: var(--text-dim); }
+
+/* ── SLIDE TYPE: SECTION INTRO ──────────────────────────────────────────── */
+.slide-section-intro { background: var(--bg-surface); }
+.section-intro-num {
+  font-family: var(--font-display); font-size: 7rem; font-weight: 700;
+  color: var(--border-bright); line-height: 1; margin-bottom: 1rem;
+  letter-spacing: -0.04em;
+}
+.section-intro-title { font-family: var(--font-display); font-size: 2.8rem; font-weight: 500; line-height: 1.1; letter-spacing: -0.02em; color: var(--text); }
+.section-intro-title em { font-style: italic; color: var(--gold-bright); }
+.section-intro-body { font-size: 0.95rem; color: var(--text-muted); margin-top: 1.2rem; max-width: 480px; line-height: 1.75; }
+
+/* ── SLIDE TYPE: CONTENT (title + bullets) ──────────────────────────────── */
+.slide-content h2 { font-size: 1.85rem; color: var(--text); margin-bottom: 1.5rem; }
+.bullet-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+.bullet-list li {
+  display: flex; gap: 1rem; align-items: flex-start;
+  font-size: 0.92rem; color: var(--text-muted); line-height: 1.6;
+  padding-bottom: 0.75rem; border-bottom: 1px solid var(--border);
+}
+.bullet-list li:last-child { border-bottom: none; }
+.bullet-marker {
+  flex-shrink: 0; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--gold); margin-top: 0.6em;
+}
+.bullet-label { font-weight: 600; color: var(--text); margin-right: 0.4rem; }
+
+/* ── SLIDE TYPE: TWO COLUMN ─────────────────────────────────────────────── */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; flex: 1; align-items: start; }
+.two-col-divider { width: 1px; background: var(--border); display: none; }
+.col-eyebrow { font-family: var(--font-mono); font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--gold); margin-bottom: 0.75rem; }
+.col-h3 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 500; color: var(--text); margin-bottom: 0.75rem; line-height: 1.25; }
+.col-body { font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; }
+
+/* ── SLIDE TYPE: STAT GRID ──────────────────────────────────────────────── */
+.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border-mid); border: 1px solid var(--border-mid); border-radius: var(--radius); overflow: hidden; flex: 1; }
+.stat-card { background: var(--bg-card); padding: 2rem 1.75rem; display: flex; flex-direction: column; justify-content: center; }
+.stat-label { font-family: var(--font-mono); font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); margin-bottom: 0.6rem; }
+.stat-val { font-family: var(--font-display); font-size: 2.6rem; font-weight: 500; color: var(--gold-bright); line-height: 1; }
+.stat-sub { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.35rem; }
+
+/* ── SLIDE TYPE: IMAGE FULL ─────────────────────────────────────────────── */
+.slide-image-full { position: relative; }
+.slide-image-full .img-fill {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  z-index: 0;
+}
+.slide-image-full .img-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to right, rgba(232,227,213,0.92) 45%, rgba(232,227,213,0.2));
+  z-index: 1;
+}
+.slide-image-full .img-content {
+  position: relative; z-index: 2;
+  padding: 56px 80px;
+  height: 100%; display: flex; flex-direction: column; justify-content: center;
+  max-width: 520px;
+}
+.slide-image-full h2 { font-size: 2.2rem; color: var(--text); margin-bottom: 1rem; }
+.slide-image-full p { font-size: 0.92rem; color: var(--text-muted); line-height: 1.7; }
+
+/* ── SLIDE TYPE: QUOTE ──────────────────────────────────────────────────── */
+.slide-quote { justify-content: center; align-items: center; background: var(--bg-surface); }
+.quote-inner { max-width: 760px; text-align: center; padding: 0 80px; }
+.quote-mark { font-family: var(--font-display); font-size: 4rem; color: var(--gold-dim); line-height: 0.5; display: block; margin-bottom: 1.5rem; }
+.quote-text { font-family: var(--font-display); font-style: italic; font-size: 1.75rem; font-weight: 400; color: var(--text); line-height: 1.4; letter-spacing: -0.01em; margin-bottom: 1.75rem; }
+.quote-cite { font-family: var(--font-mono); font-size: 0.62rem; color: var(--text-dim); letter-spacing: 0.1em; text-transform: uppercase; }
+
+/* ── SLIDE TYPE: CLOSING ────────────────────────────────────────────────── */
+.slide-closing { justify-content: center; }
+.closing-inner { padding: 56px 80px; display: flex; flex-direction: column; justify-content: center; height: 100%; }
+.closing-eyebrow { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1.5rem; }
+.closing-bar { width: 18px; height: 1px; background: var(--gold-dim); }
+.closing-tag { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); }
+.closing-h1 { font-family: var(--font-display); font-size: 3rem; font-weight: 500; letter-spacing: -0.02em; line-height: 1.1; color: var(--text); max-width: 640px; }
+.closing-h1 em { font-style: italic; color: var(--gold-bright); }
+.closing-body { font-size: 0.95rem; color: var(--text-muted); margin-top: 1.2rem; max-width: 480px; line-height: 1.7; }
+.closing-cta {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  margin-top: 2rem; padding: 0.75rem 1.5rem;
+  background: var(--green); color: #e8e3d5;
+  font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+  border-radius: var(--radius); border: none; cursor: pointer; text-decoration: none;
+}
+.closing-contact { font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-dim); letter-spacing: 0.06em; margin-top: 2.5rem; }
+
+/* ── NAVIGATION ─────────────────────────────────────────────────────────── */
+.nav {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 0.5rem;
+  background: rgba(14,26,16,0.85); backdrop-filter: blur(8px);
+  padding: 0.4rem 0.75rem; border-radius: 2px;
+  border: 1px solid rgba(31,107,58,0.2); z-index: 100;
+}
+.nav-btn {
+  background: none; border: none; cursor: pointer;
+  color: #7a7669; font-size: 0.75rem; padding: 0.3rem 0.6rem;
+  font-family: var(--font-mono);
+  transition: color 0.15s;
+}
+.nav-btn:hover { color: #e8e3d5; }
+.nav-counter { font-family: var(--font-mono); font-size: 0.62rem; color: #404638; padding: 0 0.25rem; min-width: 48px; text-align: center; }
+.nav-dot { width: 5px; height: 5px; border-radius: 50%; background: #404638; cursor: pointer; transition: background 0.15s; }
+.nav-dot.active { background: var(--gold-dim, #7a6540); }
+.nav-dots { display: flex; gap: 6px; align-items: center; padding: 0 0.5rem; }
+
+/* ── PRINT ─────────────────────────────────────────────────────────────── */
+@media print {
+  @page { size: landscape; margin: 0; }
+  html, body { width: 297mm; height: 210mm; background: var(--bg); overflow: visible; }
+  .deck-stage { width: 297mm; height: 210mm; display: block; }
+  .slide {
+    display: flex !important;
+    width: 297mm; height: 210mm;
+    page-break-after: always;
+    transform: none !important;
+    position: relative;
+  }
+  .slide:last-child { page-break-after: avoid; }
+  .nav { display: none; }
+  body::before { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="deck-stage" id="deckStage">
+
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<!-- SLIDE 1: COVER                                                          -->
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<div class="slide slide-cover active" id="s1">
+  <div class="cover-inner">
+    <div>
+      <div class="cover-eyebrow">
+        <span class="cover-bar"></span>
+        <span class="cover-tag">{{DECK_TYPE}}</span>
+      </div>
+    </div>
+    <div>
+      <h1 class="cover-h1">{{DECK_TITLE}}<br><em>{{DECK_SUBTITLE}}</em></h1>
+      <p class="cover-sub">{{DECK_INTRO}}</p>
+    </div>
+    <div>
+      <div class="cover-divider"></div>
+      <div class="cover-meta-row">
+        <dl class="cover-meta-item"><dt>Prepared for</dt><dd>{{CLIENT_NAME}}</dd></dl>
+        <dl class="cover-meta-item"><dt>Date</dt><dd>{{DECK_DATE}}</dd></dl>
+        <dl class="cover-meta-item"><dt>Engagement</dt><dd>{{ENGAGEMENT_PHASE}}</dd></dl>
+      </div>
+    </div>
+    <div class="cover-brand-row">
+      <span class="cover-brand-bar"></span>
+      <span class="cover-brand-name">Principal <span class="amp">&amp;</span> Agent</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<!-- SLIDE 2: AGENDA                                                         -->
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<div class="slide slide-content" id="s2">
+  <div class="slide-inner">
+    <div class="s-eyebrow">
+      <span class="s-bar"></span><span class="s-tag">Agenda</span>
+    </div>
+    <h2 style="font-size:1.85rem;color:var(--text);margin-bottom:1.75rem;">What we're covering <em>today</em></h2>
+    <ul class="bullet-list" style="flex:1;">
+      <li><span class="bullet-marker"></span><div><span class="bullet-label">{{AGENDA_ITEM_1_LABEL}}</span>{{AGENDA_ITEM_1_BODY}}</div></li>
+      <li><span class="bullet-marker"></span><div><span class="bullet-label">{{AGENDA_ITEM_2_LABEL}}</span>{{AGENDA_ITEM_2_BODY}}</div></li>
+      <li><span class="bullet-marker"></span><div><span class="bullet-label">{{AGENDA_ITEM_3_LABEL}}</span>{{AGENDA_ITEM_3_BODY}}</div></li>
+      <li><span class="bullet-marker"></span><div><span class="bullet-label">{{AGENDA_ITEM_4_LABEL}}</span>{{AGENDA_ITEM_4_BODY}}</div></li>
+      <li><span class="bullet-marker"></span><div><span class="bullet-label">{{AGENDA_ITEM_5_LABEL}}</span>{{AGENDA_ITEM_5_BODY}}</div></li>
+    </ul>
+    <div class="slide-footer">
+      <span class="slide-footer-brand">Principal <span class="amp">&amp;</span> Agent</span>
+      <span class="slide-footer-meta">Prepared for {{CLIENT_NAME}} · {{DECK_DATE}}</span>
+      <span class="slide-footer-num">02</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<!-- SLIDE 3: SECTION INTRO                                                  -->
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<div class="slide slide-section-intro" id="s3">
+  <div class="slide-inner-center">
+    <div class="s-eyebrow">
+      <span class="s-bar"></span><span class="s-tag">{{SECTION_1_EYEBROW}}</span>
+    </div>
+    <div class="section-intro-num">01</div>
+    <h2 class="section-intro-title">{{SECTION_1_TITLE}}<br><em>{{SECTION_1_SUBTITLE}}</em></h2>
+    <p class="section-intro-body">{{SECTION_1_BODY}}</p>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<!-- SLIDE 4: CONTENT — TITLE + BULLETS                                      -->
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<div class="slide slide-content" id="s4">
+  <div class="slide-inner">
+    <div class="s-eyebrow">
+      <span class="s-bar"></span><span class="s-tag">{{SLIDE_4_SECTION}}</span><span class="s-num">{{SLIDE_4_NUM}}</span>
+    </div>
+    <h2 style="font-size:1.85rem;color:var(--text);margin-bottom:1.5rem;">{{SLIDE_4_TITLE}}<br><em>{{SLIDE_4_SUBTITLE}}</em></h2>
+    <ul class="bullet-list" style="flex:1;">
+      <li><span class="bullet-marker"></span><div><span class="bullet-label">{{SLIDE_4_BULLET_1_LABEL}}</span>{{SLIDE_4_BULLET_1_BODY}}</div></li>
+      <li><span class="bullet-marker"></span><div><span class="bullet-label">{{SLIDE_4_BULLET_2_LABEL}}</span>{{SLIDE_4_BULLET_2_BODY}}</div></li>
+      <li><span class="bullet-marker"></span><div><span class="bullet-label">{{SLIDE_4_BULLET_3_LABEL}}</span>{{SLIDE_4_BULLET_3_BODY}}</div></li>
+      <li><span class="bullet-marker"></span><div><span class="bullet-label">{{SLIDE_4_BULLET_4_LABEL}}</span>{{SLIDE_4_BULLET_4_BODY}}</div></li>
+    </ul>
+    <div class="slide-footer">
+      <span class="slide-footer-brand">Principal <span class="amp">&amp;</span> Agent</span>
+      <span class="slide-footer-meta">Prepared for {{CLIENT_NAME}} · {{DECK_DATE}}</span>
+      <span class="slide-footer-num">04</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<!-- SLIDE 5: TWO COLUMN                                                     -->
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<div class="slide" id="s5">
+  <div class="slide-inner">
+    <div class="s-eyebrow">
+      <span class="s-bar"></span><span class="s-tag">{{SLIDE_5_SECTION}}</span><span class="s-num">{{SLIDE_5_NUM}}</span>
+    </div>
+    <h2 style="font-size:1.85rem;color:var(--text);margin-bottom:1.5rem;">{{SLIDE_5_TITLE}}<br><em>{{SLIDE_5_SUBTITLE}}</em></h2>
+    <div class="two-col" style="flex:1;">
+      <div>
+        <div class="col-eyebrow">{{SLIDE_5_COL_1_EYEBROW}}</div>
+        <h3 class="col-h3">{{SLIDE_5_COL_1_TITLE}}</h3>
+        <p class="col-body">{{SLIDE_5_COL_1_BODY}}</p>
+      </div>
+      <div>
+        <div class="col-eyebrow">{{SLIDE_5_COL_2_EYEBROW}}</div>
+        <h3 class="col-h3">{{SLIDE_5_COL_2_TITLE}}</h3>
+        <p class="col-body">{{SLIDE_5_COL_2_BODY}}</p>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span class="slide-footer-brand">Principal <span class="amp">&amp;</span> Agent</span>
+      <span class="slide-footer-meta">Prepared for {{CLIENT_NAME}} · {{DECK_DATE}}</span>
+      <span class="slide-footer-num">05</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<!-- SLIDE 6: STAT GRID                                                      -->
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<div class="slide" id="s6">
+  <div class="slide-inner">
+    <div class="s-eyebrow">
+      <span class="s-bar"></span><span class="s-tag">{{SLIDE_6_SECTION}}</span><span class="s-num">{{SLIDE_6_NUM}}</span>
+    </div>
+    <h2 style="font-size:1.85rem;color:var(--text);margin-bottom:1.5rem;">{{SLIDE_6_TITLE}}<br><em>{{SLIDE_6_SUBTITLE}}</em></h2>
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-label">{{STAT_1_LABEL}}</div>
+        <div class="stat-val">{{STAT_1_VAL}}</div>
+        <div class="stat-sub">{{STAT_1_SUB}}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">{{STAT_2_LABEL}}</div>
+        <div class="stat-val">{{STAT_2_VAL}}</div>
+        <div class="stat-sub">{{STAT_2_SUB}}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">{{STAT_3_LABEL}}</div>
+        <div class="stat-val">{{STAT_3_VAL}}</div>
+        <div class="stat-sub">{{STAT_3_SUB}}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">{{STAT_4_LABEL}}</div>
+        <div class="stat-val">{{STAT_4_VAL}}</div>
+        <div class="stat-sub">{{STAT_4_SUB}}</div>
+      </div>
+    </div>
+    <div class="slide-footer" style="margin-top:0.75rem;">
+      <span class="slide-footer-brand">Principal <span class="amp">&amp;</span> Agent</span>
+      <span class="slide-footer-meta">Prepared for {{CLIENT_NAME}} · {{DECK_DATE}}</span>
+      <span class="slide-footer-num">06</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<!-- SLIDE 7: IMAGE + TEXT                                                   -->
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<div class="slide slide-image-full" id="s7">
+  <!-- Replace src with data:image/png;base64,{{IMG_SLIDE_7}} -->
+  <img class="img-fill" src="data:image/png;base64,{{IMG_SLIDE_7}}" alt="{{SLIDE_7_IMG_ALT}}" />
+  <div class="img-overlay"></div>
+  <div class="img-content">
+    <div class="s-eyebrow" style="margin-bottom:1rem;">
+      <span class="s-bar"></span><span class="s-tag">{{SLIDE_7_SECTION}}</span>
+    </div>
+    <h2 style="font-size:2.1rem;margin-bottom:1rem;">{{SLIDE_7_TITLE}}<br><em>{{SLIDE_7_SUBTITLE}}</em></h2>
+    <p style="font-size:0.9rem;color:var(--text-muted);line-height:1.7;max-width:400px;">{{SLIDE_7_BODY}}</p>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<!-- SLIDE 8: PULL QUOTE                                                     -->
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<div class="slide slide-quote" id="s8">
+  <div class="quote-inner">
+    <span class="quote-mark">"</span>
+    <p class="quote-text">{{QUOTE_TEXT}}</p>
+    <span class="quote-cite">— {{QUOTE_ATTRIBUTION}}</span>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<!-- SLIDE 9: CLOSING                                                        -->
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<div class="slide slide-closing" id="s9">
+  <div class="closing-inner">
+    <div class="closing-eyebrow">
+      <span class="closing-bar"></span>
+      <span class="closing-tag">Next steps</span>
+    </div>
+    <h1 class="closing-h1">{{CLOSING_TITLE}}<br><em>{{CLOSING_SUBTITLE}}</em></h1>
+    <p class="closing-body">{{CLOSING_BODY}}</p>
+    <a class="closing-cta" href="mailto:{{CONTACT_EMAIL}}">{{CLOSING_CTA_LABEL}}</a>
+    <div class="closing-contact">{{CONTACT_EMAIL}} · pna.agency</div>
+    <div style="margin-top:3rem;display:flex;align-items:center;gap:0.5rem;">
+      <span style="width:22px;height:1px;background:var(--border-mid);display:block;"></span>
+      <span style="font-family:var(--font-display);font-size:0.85rem;color:var(--text-dim);">Principal <span class="amp">&amp;</span> Agent</span>
+    </div>
+  </div>
+</div>
+
+</div><!-- /.deck-stage -->
+
+<!-- ── NAVIGATION ─────────────────────────────────────────────────────────── -->
+<div class="nav" id="nav">
+  <button class="nav-btn" id="prevBtn" onclick="navigate(-1)">&#8592;</button>
+  <div class="nav-dots" id="navDots"></div>
+  <span class="nav-counter" id="navCounter">1 / 9</span>
+  <button class="nav-btn" id="nextBtn" onclick="navigate(1)">&#8594;</button>
+</div>
+
+<script>
+(function() {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const dotsEl = document.getElementById('navDots');
+  const counter = document.getElementById('navCounter');
+  let current = 0;
+
+  // build dots
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'nav-dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goTo(i);
+    dotsEl.appendChild(d);
+  });
+
+  function goTo(idx) {
+    slides[current].classList.remove('active');
+    dotsEl.children[current].classList.remove('active');
+    current = Math.max(0, Math.min(idx, slides.length - 1));
+    slides[current].classList.add('active');
+    dotsEl.children[current].classList.add('active');
+    counter.textContent = (current + 1) + ' / ' + slides.length;
+  }
+
+  window.navigate = function(dir) { goTo(current + dir); };
+
+  // keyboard
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); navigate(1); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); navigate(-1); }
+  });
+
+  // scale slides to fit viewport
+  function scaleSlides() {
+    const stage = document.getElementById('deckStage');
+    const sw = stage.clientWidth, sh = stage.clientHeight;
+    const scale = Math.min(sw / 1280, sh / 720);
+    slides.forEach(s => {
+      s.style.transform = 'scale(' + scale + ')';
+      s.style.left = ((sw - 1280 * scale) / 2) + 'px';
+      s.style.top = ((sh - 720 * scale) / 2) + 'px';
+      s.style.position = 'absolute';
+    });
+  }
+
+  scaleSlides();
+  window.addEventListener('resize', scaleSlides);
+})();
+</script>
+
+</body>
+</html>
