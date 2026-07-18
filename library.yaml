@@ -59,6 +59,7 @@ library:
     - name: research-refine
       description: Turn a vague research direction into a concrete, problem-anchored implementation-ready plan.
       source: ~/dev/projects/rnd/skills/aris/research-refine/skill.md
+      # retired 2026-07-17 (meta-optimize measured de-list): ~75% overlap with idea-refine/research-wiki/problem-decomposition, 0 invocations. Deactivated from ~/.claude/skills/, restore with /library use research-refine
 
     # ── Web & Content ────────────────────────────────────────────────────────
     - name: media-extract
@@ -274,10 +275,12 @@ library:
     - name: gemini-interactions-api
       description: Call the Gemini API for text generation, chat, streaming, and function calling.
       source: ~/.claude/skills/gemini-interactions-api/skill.md
+      # retired 2026-07-17 (meta-optimize measured de-list): niche API, 0 invocations, no fleet consumer. Deactivated from ~/.claude/skills/, restore with /library use gemini-interactions-api
 
     - name: gemini-live-api-dev
       description: Build real-time bidirectional streaming apps with the Gemini Live API.
       source: ~/.claude/skills/gemini-live-api-dev/skill.md
+      # retired 2026-07-17 (meta-optimize measured de-list): niche API, 0 invocations, no fleet consumer. Deactivated from ~/.claude/skills/, restore with /library use gemini-live-api-dev
 
     - name: vertex-ai-api-dev
       description: Use Gemini on Google Cloud Vertex AI. Enterprise environments, Gen AI SDK.
@@ -378,10 +381,12 @@ library:
     - name: paper-code-audit
       description: Compare a paper's claims against its public codebase. Identify mismatches and gaps.
       source: ~/dev/projects/rnd/skills/feynman/paper-code-audit/skill.md
+      # retired 2026-07-17 (meta-optimize measured de-list): research niche, 0 invocations, no named consumer. Deactivated from ~/.claude/skills/, restore with /library use paper-code-audit
 
     - name: replication
       description: Plan or execute a replication of a paper's results, claims, or benchmarks.
       source: ~/dev/projects/rnd/skills/feynman/replication/skill.md
+      # retired 2026-07-17 (meta-optimize measured de-list): research niche, 0 invocations, no named consumer. Deactivated from ~/.claude/skills/, restore with /library use replication
 
     - name: idea-discovery
       description: Full idea discovery pipeline — survey field, generate ideas, check novelty, refine.
@@ -409,6 +414,7 @@ library:
         or mentioning specific SaaS tools by name. Fire on the very first qualifying
         call — the P&A opener. Wedge that pays for itself before scope is signed.
       source: ~/dev/projects/principal-plugin/skills/saas-decommission/SKILL.md
+      # retired 2026-07-17 (meta-optimize measured de-list): orphan, 0 invocations, overlaps deprecation-and-migration. Deactivated from ~/.claude/skills/, restore with /library use saas-decommission
       phase: "0 — Wedge"
       requires: []
       install_mode: standalone
@@ -598,6 +604,7 @@ library:
     - name: banana-squad
       description: 5-agent image generation pipeline powered by the Gemini 3 Pro Image API (Nano Banana Pro). Use when generating professional-quality images — hero images, infographics, presentation graphics, brand assets. Triggers on "generate an image", "banana squad", "make a hero image".
       source: ~/dev/projects/pna-library/skills/banana-squad/SKILL.md
+      # retired 2026-07-17 (meta-optimize measured de-list): image gen, 0 invocations, overlaps pna-brand visual work. Deactivated from ~/.claude/skills/, restore with /library use banana-squad
 
     - name: cut-release
       description: Cut a dated/named release snapshot of a git repo into a bare remote under ~/dev/github-dated so deployments clone from a frozen, self-identifying version. Triggers on "cut a release", "snapshot [repo]", "freeze this version", "tag today's build".
@@ -618,6 +625,7 @@ library:
     - name: web-design-guidelines
       description: Review UI code for Web Interface Guidelines compliance. Use when asked to "review my UI", "check accessibility", "audit design", "review UX", or "check my site against best practices".
       source: ~/dev/projects/pna-library/skills/web-design-guidelines/SKILL.md
+      # retired 2026-07-17 (meta-optimize measured de-list): overlaps frontend-ui-engineering, 0 invocations. Deactivated from ~/.claude/skills/, restore with /library use web-design-guidelines
 
   agents:
 
