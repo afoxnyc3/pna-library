@@ -151,7 +151,7 @@ library:
 
     - name: anthropic-claude-api
       description: Build, debug, and optimize Claude API / Anthropic SDK apps. Handles prompt caching, model migrations, tool use, batch, and citations. TRIGGER on code importing anthropic/@anthropic-ai/sdk or any Claude API feature question.
-      source: ~/.claude/skills/anthropic-claude-api/skill.md
+      source: ~/.claude/skills/anthropic-claude-api/SKILL.md
 
     - name: agent-sandboxes
       description: Operate E2B agent sandboxes via CLI. Use when running code in isolation, testing packages, or executing commands safely in a sandbox environment.
@@ -618,10 +618,6 @@ library:
     - name: web-design-guidelines
       description: Review UI code for Web Interface Guidelines compliance. Use when asked to "review my UI", "check accessibility", "audit design", "review UX", or "check my site against best practices".
       source: ~/dev/projects/pna-library/skills/web-design-guidelines/SKILL.md
-
-    - name: wrap
-      description: End-of-session summary and publish. Runs agent-session-summary to save a local handoff file, then publishes the session to pna-sessions and optionally notifies via Telegram. Invoke with /wrap at the end of any session. (Also listed under prompts; this is the skill implementation.)
-      source: ~/dev/projects/pna-library/skills/wrap/SKILL.md
 
   agents:
 
