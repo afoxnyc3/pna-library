@@ -627,6 +627,76 @@ library:
       source: ~/dev/projects/pna-library/skills/web-design-guidelines/SKILL.md
       # retired 2026-07-17 (meta-optimize measured de-list): overlaps frontend-ui-engineering, 0 invocations. Deactivated from ~/.claude/skills/, restore with /library use web-design-guidelines
 
+    # ── Cloudflare & Platform Engineering ─────────────────────────────────────
+    # Added 2026-09-06 by a catalogue reconciliation (issue #143). These 16 were
+    # INSTALLED and routable in ~/.claude/skills/ but absent from this file, so
+    # `/library` could not see a sixth of the working set. Structural evidence
+    # only: each has a SKILL.md on disk and is loadable today.
+
+    - name: cloudflare
+      description: "Comprehensive Cloudflare platform skill covering Workers, Pages, storage (KV, D1, R2), AI (Workers AI, Vectorize, Agents SDK) and feature flags."
+      source: ~/.claude/skills/cloudflare/SKILL.md
+
+    - name: workers-best-practices
+      description: "Reviews and authors Cloudflare Workers code against production best practices. Load when writing new Workers, reviewing Worker code, or configuring wrangler."
+      source: ~/.claude/skills/workers-best-practices/SKILL.md
+
+    - name: wrangler
+      description: "Cloudflare Workers CLI for deploying, developing and managing Workers, KV, R2, D1, Vectorize, Hyperdrive, Workers AI, Containers, Queues and Workflows."
+      source: ~/.claude/skills/wrangler/SKILL.md
+
+    - name: durable-objects
+      description: "Create and review Cloudflare Durable Objects. Use when building stateful coordination or implementing per-object storage and alarms."
+      source: ~/.claude/skills/durable-objects/SKILL.md
+
+    - name: agents-sdk
+      description: "Build AI agents on Cloudflare Workers using the Agents SDK. Load when creating stateful agents, durable workflows, real-time WebSocket apps or scheduled work."
+      source: ~/.claude/skills/agents-sdk/SKILL.md
+
+    - name: cloudflare-email-service
+      description: "Send and receive transactional email with Cloudflare Email Service (Email Sending plus Email Routing)."
+      source: ~/.claude/skills/cloudflare-email-service/SKILL.md
+
+    - name: cloudflare-one
+      description: "Guides Cloudflare One Zero Trust and SASE work across Access, Gateway, WARP, Tunnel, DLP, CASB, device posture and identity."
+      source: ~/.claude/skills/cloudflare-one/SKILL.md
+
+    - name: cloudflare-one-migrations
+      description: "Plans migrations from Zscaler ZIA/ZPA, Palo Alto, legacy VPN, SWG or SASE stacks to Cloudflare One, including policy mapping and rollout."
+      source: ~/.claude/skills/cloudflare-one-migrations/SKILL.md
+
+    - name: turnstile-spin
+      description: "Set up Cloudflare Turnstile end to end. Scan the codebase, create the widget via the Cloudflare API, and embed it where requests need bot protection."
+      source: ~/.claude/skills/turnstile-spin/SKILL.md
+
+    - name: sandbox-stable
+      description: "Build or change Cloudflare Sandbox apps on the current stable @cloudflare/sandbox package. Commands, sessions, files, processes."
+      source: ~/.claude/skills/sandbox-stable/SKILL.md
+
+    - name: sandbox-next
+      description: "Build or change Cloudflare Sandbox apps on @cloudflare/sandbox@next (SDK 1.0 preview). Code execution, AI runners, interpreters."
+      source: ~/.claude/skills/sandbox-next/SKILL.md
+
+    - name: sandbox-migrate-to-next
+      description: "Port a Cloudflare Sandbox app from stable @cloudflare/sandbox to @cloudflare/sandbox@next (SDK 1.0 preview)."
+      source: ~/.claude/skills/sandbox-migrate-to-next/SKILL.md
+
+    - name: web-perf
+      description: "Analyse web performance using Chrome DevTools MCP. Measures Core Web Vitals (LCP, INP, CLS) plus FCP, TBT and Speed Index, and identifies causes."
+      source: ~/.claude/skills/web-perf/SKILL.md
+
+    - name: fleet-ops
+      description: "Diagnose, heal, restart and upgrade the ClaudeClaw agent fleet. Use for fleet health, agent status, cost, or why an agent is not responding."
+      source: ~/.claude/skills/fleet-ops/SKILL.md
+
+    - name: github-oidc-federation
+      description: "Diagnose and repair GitHub Actions OIDC federation into AWS or Azure. IAM trust-policy subjects, Azure federated credentials, AssumeRoleWithWebIdentity."
+      source: ~/.claude/skills/github-oidc-federation/SKILL.md
+
+    - name: github-org-migration
+      description: "Move a GitHub repository between owners (personal to org, consultancy to client, org to org) without leaking it or breaking references."
+      source: ~/.claude/skills/github-org-migration/SKILL.md
+
   agents:
 
     - name: principal-engineer
