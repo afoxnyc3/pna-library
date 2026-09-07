@@ -32,6 +32,7 @@ The Library is a catalog of references to your agentics. The `library.yaml` file
 | `/library push <name>`      | Push local changes back to source        |
 | `/library remove <name>`    | Remove from catalog and optionally local |
 | `/library list`             | Show full catalog with install status    |
+| `/library list experts`     | Show registered agent-expert-kit triads  |
 | `/library sync`             | Re-pull all installed items from source   |
 | `/library search <keyword>` | Find entries by keyword                  |
 
@@ -47,6 +48,7 @@ Each command has a detailed step-by-step guide. **Read the relevant cookbook fil
 | push    | [cookbook/push.md](cookbook/push.md)       | User improved a skill locally and wants to update the source |
 | remove  | [cookbook/remove.md](cookbook/remove.md)   | User wants to remove an entry from the catalog               |
 | list    | [cookbook/list.md](cookbook/list.md)       | User wants to see what's available and what's installed      |
+| list experts | [cookbook/list-experts.md](cookbook/list-experts.md) | User wants to see registered agent-expert-kit domain triads |
 | sync    | [cookbook/sync.md](cookbook/sync.md)       | User wants to refresh all installed items at once            |
 | search  | [cookbook/search.md](cookbook/search.md)   | User is looking for a skill but doesn't know the exact name |
 

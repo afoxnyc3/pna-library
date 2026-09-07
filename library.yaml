@@ -877,3 +877,12 @@ community_catalog:
     status: watch
     blocker: Requires CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 — experimental flag, not production-ready.
     p_and_a_relevance: Directly maps to sandbox orchestrator vision. Revisit when Claude Code agent teams exits experimental.
+experts:
+- name: Claudeclaw Missions
+  domain: claudeclaw-missions
+  path: /Users/alex/.pna/experts/claudeclaw-missions
+  last_sync: '2026-04-21'
+- name: Creator Stack
+  domain: creator-stack
+  path: /Users/alex/.pna/experts/creator-stack
+  last_sync: '2026-04-23'
