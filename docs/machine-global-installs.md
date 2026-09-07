@@ -12,8 +12,9 @@ Record every entry with: what, why, the exact command, and how to undo it.
 
 ## `networkx` — homebrew python 3.14
 
-**For:** the `deeptutor` skill. `scripts/graph_builder.py` and
-`scripts/graph_retriever.py` hard-fail without it:
+**For:** the `deeptutor` skill. `scripts/graph_builder.py` hard-fails without it
+at the guard in `load_graph()`; `scripts/graph_retriever.py` fails transitively
+through `from graph_builder import load_graph`. Same error either way:
 
 ```
 ERROR: networkx not installed. Run: pip install networkx
