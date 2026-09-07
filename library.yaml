@@ -76,6 +76,7 @@ library:
       upstream: https://github.com/ndpvt-web/deeptutor-claude-skill
       consumer: agent:deeptutor (~/.claude/agents/deeptutor.md) — the agent shells out to scripts/ in this skill dir
       requires: [python:networkx]
+      # networkx installed machine-globally into homebrew python 3.14 (PEP-668, --break-system-packages). Not revertible from this repo: see docs/machine-global-installs.md
 
     - name: jobs
       description: Inspect active background research — running processes, scheduled tasks, pending missions.

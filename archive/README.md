@@ -18,6 +18,10 @@ The runtime archive is a single root. There is exactly one, at
 (`2026-04/`, `2026-07-08/`, `2026-07-17/`) — dated to the groom, not the month,
 because two separate grooms both landed in July 2026.
 
+`2026-04/` stays a bare month by exception: it predates the convention and its
+exact groom date is not recorded anywhere, so dating it would mean inventing a
+day. New cohorts use a full `YYYY-MM-DD`.
+
 See `~/.claude/skills/.archive/README.md` for the runtime-side procedure.
 
 ## Retiring a skill
