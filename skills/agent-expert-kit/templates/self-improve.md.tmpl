@@ -1,0 +1,132 @@
+---
+allowed-tools: Read, Grep, Glob, Bash, Edit, Write, TodoWrite
+description: Keep $DOMAIN expertise in sync with the current codebase. Detects drift, rewrites stale sections, enforces line cap, and validates YAML.
+argument-hint: [check_git_diff=true|false] [focus_area=<optional section name>]
+---
+
+# $DOMAIN — Self-Improve Expertise
+
+Validates `$EXPERTISE_FILE` against the live codebase, fixes drift, enforces the line cap,
+and confirms YAML compiles. Produces a drift report on completion.
+
+## Variables
+
+CHECK_GIT_DIFF: $1   # default: false
+FOCUS_AREA: $2       # default: empty (all sections)
+EXPERTISE_FILE: $EXPERTISE_FILE
+SCOPE_GLOB: $SCOPE_GLOB
+MAX_LINES: $MAX_LINES
+
+## Instructions
+
+- This is a maintenance workflow. Validate against real files, not assumptions.
+- Every updated claim must cite a source file path in scope.
+- Maintain YAML structure and formatting throughout.
+- Keep the expertise file as a **mental model**: prioritise actionable, agent-facing knowledge.
+- Omit summaries of what changed — focus on accurate, durable knowledge.
+- Nothing to do = acceptable. Report it and stop.
+
+## Workflow
+
+### Step 1 — Git diff (conditional)
+
+If `CHECK_GIT_DIFF` is `"true"`:
+```bash
+git diff --name-only HEAD~1 2>/dev/null || git diff --name-only
+```
+Note changed files that fall under `SCOPE_GLOB` for targeted validation in Step 3.
+
+If `CHECK_GIT_DIFF` is `"false"` or omitted, skip this step.
+
+### Step 2 — Read current expertise
+
+Read `EXPERTISE_FILE` in full.
+
+Identify top-level sections. If `FOCUS_AREA` is set, prioritise that section. Note anything
+that looks stale, over-specified, or missing.
+
+### Step 3 — Validate against codebase
+
+From `EXPERTISE_FILE`, identify the key files documented in `core_implementation`. Read those
+files (and any others in SCOPE_GLOB that seem relevant). Compare:
+
+- Documented function signatures vs actual (names, parameters, return types).
+- Documented line numbers vs actual positions.
+- Schema / interface fields vs actual definitions.
+- Any new files in SCOPE_GLOB that are not yet documented.
+- Any files documented that no longer exist.
+
+If `FOCUS_AREA` is set, narrow validation to that section.
+If git diff was run in Step 1, pay extra attention to changed files.
+
+### Step 4 — Identify discrepancies
+
+List every discrepancy found:
+- What is wrong / missing / outdated in the expertise file.
+- Where in the codebase the correct information is (file + line).
+
+If zero discrepancies: write `"No drift found. expertise.yaml is current."` and skip to Step 7.
+
+### Step 5 — Update expertise
+
+Edit `EXPERTISE_FILE` to remedy every discrepancy from Step 4:
+- Add missing entries (with source citations).
+- Update stale entries (correct file paths, line numbers, signatures).
+- Remove entries for code that no longer exists.
+
+Every updated or added claim must include a `source:` or `(file: ...)` citation.
+
+### Step 6 — Enforce line cap
+
+```bash
+wc -l "$EXPERTISE_FILE"
+```
+
+If line count > `MAX_LINES`:
+  1. Identify the least-important entries (verbose descriptions, redundant examples, low-usage edge cases).
+  2. Trim them.
+  3. Re-run `wc -l`. Repeat until line count ≤ `MAX_LINES`.
+
+### Step 7 — Compile check
+
+```bash
+python3 -c "
+import yaml, sys
+path = '$EXPERTISE_FILE'
+try:
+    yaml.safe_load(open(path))
+    n = open(path).read().count('\n')
+    print(f'PASS: valid YAML, {n} lines')
+except yaml.YAMLError as e:
+    print(f'FAIL: {e}', file=sys.stderr)
+    sys.exit(1)
+"
+```
+
+If this fails, fix the YAML syntax error and re-run. Do not report success until exit code 0.
+
+## Report
+
+Provide a structured drift report saved to `~/.pna/experts/$DOMAIN/.last-sync.md`:
+
+```markdown
+# Drift Report — $DOMAIN
+Date: <ISO date>
+Git diff checked: <yes/no>
+Focus area: <section or "all">
+
+## Discrepancies found: <N>
+<numbered list, or "None">
+
+## Updates made
+<bulleted list of changes, or "None">
+
+## Line cap
+- Before: <N> lines
+- After:  <N> lines / MAX_LINES
+
+## Validation
+YAML compile: <PASS / FAIL + error>
+```
+
+Print the report summary to the user on completion.

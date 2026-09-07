@@ -1,0 +1,46 @@
+---
+allowed-tools: Bash, Read, Grep, Glob, TodoWrite
+description: Answer questions about $DOMAIN using the seeded expertise file. Read-only — no file changes.
+argument-hint: [question]
+---
+
+# $DOMAIN — Expert Q&A
+
+Answer questions about this domain by reading the expertise file, validating it against the
+live codebase, then responding with grounded, source-cited answers.
+
+## Variables
+
+USER_QUESTION: $1
+EXPERTISE_PATH: $EXPERTISE_PATH
+
+## Instructions
+
+- This is question-answering only. DO NOT write, edit, or create any files.
+- If the question requires a code change, explain the steps conceptually without implementing.
+- Validate expertise against live files before answering — don't relay stale YAML as fact.
+- Cite the exact file (and line where useful) for every non-trivial claim in your answer.
+
+## Workflow
+
+### 1 — Read expertise
+
+Read `EXPERTISE_PATH` in full. Note: `overview`, `core_implementation`, and the domain section.
+
+### 2 — Validate against codebase
+
+Pick 2-3 claims in the expertise that are directly relevant to `USER_QUESTION`. Verify each
+against the real source files (Grep, Read, Glob as needed). Flag any discrepancy:
+`"Note: expertise.yaml says X but src/foo.ts line N shows Y."`
+
+Do not update expertise.yaml here. Discrepancies are for self-improve.md to fix.
+
+### 3 — Respond
+
+Structure your answer:
+
+- **Direct answer** to `USER_QUESTION` — lead with it, one sentence if possible.
+- **Supporting evidence** — specific file paths, line numbers, function names from the expertise
+  file and/or live codebase. No unsourced assertions.
+- **Conceptual context** — optional; include only if it adds non-obvious insight.
+- **Schema or code snippet** — include only if it materially aids understanding.
