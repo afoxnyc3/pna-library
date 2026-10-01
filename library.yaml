@@ -47,6 +47,7 @@ library:
     - name: eli5
       description: Explain research papers or technical concepts in plain English with concrete analogies.
       source: ~/dev/projects/rnd/skills/feynman/eli5/skill.md
+      # retired 2026-10-01 (quarterly audit): 0 invocations, 0 reads, no consumer in any agent CLAUDE.md. Restore with /library use eli5
 
     - name: alpha-research
       description: Search, read, and query academic research papers via the alpha CLI.
@@ -55,6 +56,7 @@ library:
     - name: research-wiki
       description: Persistent research knowledge base. Karpathy LLM Wiki pattern — compile once, keep current.
       source: ~/dev/projects/rnd/skills/aris/research-wiki/skill.md
+      # retired 2026-10-01 (quarterly audit): 0 invocations, no consumer; persistent-wiki pattern is owned by cerberus. Restore with /library use research-wiki
 
     - name: research-refine
       description: Turn a vague research direction into a concrete, problem-anchored implementation-ready plan.
@@ -385,6 +387,7 @@ library:
     - name: paper-writing
       description: Turn research findings into a polished paper-style draft with sections and citations.
       source: ~/dev/projects/rnd/skills/feynman/paper-writing/skill.md
+      # retired 2026-10-01 (quarterly audit): 0 invocations, no consumer; last survivor of the paper niche cluster retired 2026-07-17. Restore with /library use paper-writing
 
     - name: paper-code-audit
       description: Compare a paper's claims against its public codebase. Identify mismatches and gaps.
@@ -523,86 +526,107 @@ library:
     - name: write
       description: Generalized writing skill for any platform and format — newsletters, YouTube scripts, guides, sales pages, social posts. Handles structure, drafting, and platform conventions.
       source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/write/SKILL.md
+      # retired 2026-10-01 (quarterly audit): never installed, 0 invocations, no content agent in the fleet; source stays in ~/dev/external/ai-launchpad-marketplace. Restore with /library use write
 
     - name: voice
       description: Apply an authentic writing voice to produced content. Personality layer invoked by other writing skills or directly.
       source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/voice/SKILL.md
+      # retired 2026-10-01 (quarterly audit): never installed, 0 invocations, no content agent in the fleet; source stays in ~/dev/external/ai-launchpad-marketplace. Restore with /library use voice
 
     - name: research-creator
       description: Topic and competitor research for any content type. Identifies content gaps and competitive landscape before writing.
       source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/research/SKILL.md
+      # retired 2026-10-01 (quarterly audit): never installed, 0 invocations, no content agent in the fleet; source stays in ~/dev/external/ai-launchpad-marketplace. Restore with /library use research-creator
 
     - name: title
       description: Generate optimized titles, headlines, and subject lines for any content type. YouTube, newsletters, blog posts, social.
       source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/title/SKILL.md
+      # retired 2026-10-01 (quarterly audit): never installed, 0 invocations, no content agent in the fleet; source stays in ~/dev/external/ai-launchpad-marketplace. Restore with /library use title
 
     - name: hook
       description: Create retention-optimized opening hooks — video intros, newsletter leads, social post openers.
       source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/hook/SKILL.md
+      # retired 2026-10-01 (quarterly audit): never installed, 0 invocations, no content agent in the fleet; source stays in ~/dev/external/ai-launchpad-marketplace. Restore with /library use hook
 
     - name: extract-ideas
       description: Mine source material (transcripts, newsletters, notes) for repurposable content angles and ideas.
       source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/extract-ideas/SKILL.md
+      # retired 2026-10-01 (quarterly audit): never installed, 0 invocations, no content agent in the fleet; source stays in ~/dev/external/ai-launchpad-marketplace. Restore with /library use extract-ideas
 
     - name: thumbnail
       description: Design high-CTR YouTube thumbnails and cover images. Title-aware, concept-first.
       source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/thumbnail/SKILL.md
+      # retired 2026-10-01 (quarterly audit): never installed, 0 invocations, no content agent in the fleet; source stays in ~/dev/external/ai-launchpad-marketplace. Restore with /library use thumbnail
 
     - name: social-graphic
       description: Create social media graphics, newsletter headers, blog feature images, OG images, profile banners.
       source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/social-graphic/SKILL.md
+      # retired 2026-10-01 (quarterly audit): never installed, 0 invocations, no content agent in the fleet; source stays in ~/dev/external/ai-launchpad-marketplace. Restore with /library use social-graphic
 
     - name: design-system
       description: Create, update, or refresh a visual design system or art style guide.
       source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/design-system/SKILL.md
+      # retired 2026-10-01 (quarterly audit): never installed, 0 invocations, no content agent in the fleet; source stays in ~/dev/external/ai-launchpad-marketplace. Restore with /library use design-system
 
     - name: brand-guidelines
       description: Define, codify, or update brand identity and connect it to visual design systems.
       source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/brand-guidelines/SKILL.md
+      # retired 2026-10-01 (quarterly audit): never installed, 0 invocations, no content agent in the fleet; source stays in ~/dev/external/ai-launchpad-marketplace. Restore with /library use brand-guidelines
 
     - name: nanobanana
       description: AI image generation and editing using Google Gemini models (nano banana). Requires GEMINI_API_KEY.
       source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/nanobanana/SKILL.md
+      # retired 2026-10-01 (quarterly audit): never installed, 0 invocations, no content agent in the fleet; source stays in ~/dev/external/ai-launchpad-marketplace. Restore with /library use nanobanana
 
     - name: plan-newsletter
       description: Plan a complete newsletter issue — research, draft, subject line, opening hook, and social promotion posts.
       source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/plan-newsletter/SKILL.md
+      # retired 2026-10-01 (quarterly audit): never installed, 0 invocations, no content agent in the fleet; source stays in ~/dev/external/ai-launchpad-marketplace. Restore with /library use plan-newsletter
 
     - name: optimize-newsletter
       description: Optimize a newsletter draft or write a full issue from an outline. Polish, improve, rewrite.
       source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/optimize-newsletter/SKILL.md
+      # retired 2026-10-01 (quarterly audit): never installed, 0 invocations, no content agent in the fleet; source stays in ~/dev/external/ai-launchpad-marketplace. Restore with /library use optimize-newsletter
 
     - name: newsletter-visuals
       description: Audit a newsletter draft for visual opportunities and generate on-brand visual assets.
       source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/newsletter-visuals/SKILL.md
+      # retired 2026-10-01 (quarterly audit): never installed, 0 invocations, no content agent in the fleet; source stays in ~/dev/external/ai-launchpad-marketplace. Restore with /library use newsletter-visuals
 
     - name: newsletter-to-video
       description: Repurpose a newsletter issue into a YouTube video outline.
       source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/newsletter-to-video/SKILL.md
+      # retired 2026-10-01 (quarterly audit): never installed, 0 invocations, no content agent in the fleet; source stays in ~/dev/external/ai-launchpad-marketplace. Restore with /library use newsletter-to-video
 
     - name: plan-video
       description: Complete YouTube video plan — title options, thumbnail concepts, hooks, content outline.
       source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/plan-video/SKILL.md
+      # retired 2026-10-01 (quarterly audit): never installed, 0 invocations, no content agent in the fleet; source stays in ~/dev/external/ai-launchpad-marketplace. Restore with /library use plan-video
 
     - name: repurpose-video
       description: Repurpose a completed YouTube video into newsletter issues, social posts, and other formats.
       source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/repurpose-video/SKILL.md
+      # retired 2026-10-01 (quarterly audit): never installed, 0 invocations, no content agent in the fleet; source stays in ~/dev/external/ai-launchpad-marketplace. Restore with /library use repurpose-video
 
     - name: community-post
       description: Create YouTube community posts that drive views and audience engagement.
       source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/community-post/SKILL.md
+      # retired 2026-10-01 (quarterly audit): never installed, 0 invocations, no content agent in the fleet; source stays in ~/dev/external/ai-launchpad-marketplace. Restore with /library use community-post
 
     - name: ideate-notes
       description: Generate Substack Note ideas by scanning published YouTube videos, newsletters, and Notes.
       source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/ideate-notes/SKILL.md
+      # retired 2026-10-01 (quarterly audit): never installed, 0 invocations, no content agent in the fleet; source stays in ~/dev/external/ai-launchpad-marketplace. Restore with /library use ideate-notes
 
     - name: write-note
       description: Create high-engagement Substack Notes. Single short posts or promotion of a newsletter issue.
       source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/write-note/SKILL.md
+      # retired 2026-10-01 (quarterly audit): never installed, 0 invocations, no content agent in the fleet; source stays in ~/dev/external/ai-launchpad-marketplace. Restore with /library use write-note
 
     - name: youtube-data
       description: Retrieve YouTube data via the YouTube Data API — video search, channel details, transcripts, comments, trends. Requires YOUTUBE_API_KEY and uv.
       source: ~/dev/external/ai-launchpad-marketplace/creator-stack/skills/youtube-data/SKILL.md
+      # retired 2026-10-01 (quarterly audit): never installed, 0 invocations, no content agent in the fleet; source stays in ~/dev/external/ai-launchpad-marketplace. Restore with /library use youtube-data
 
     # ── Reconciliation 2026-07-08 (active skills previously uncatalogued) ────
     - name: agent-browser
@@ -692,6 +716,7 @@ library:
     - name: web-perf
       description: "Analyse web performance using Chrome DevTools MCP. Measures Core Web Vitals (LCP, INP, CLS) plus FCP, TBT and Speed Index, and identifies causes."
       source: ~/.claude/skills/web-perf/SKILL.md
+      # retired 2026-10-01 (quarterly audit): 0 invocations since 2026-04-19, no consumer; covered by performance-optimization + browser-testing-with-devtools. Restore with /library use web-perf
 
     - name: fleet-ops
       description: "Diagnose, heal, restart and upgrade the ClaudeClaw agent fleet. Use for fleet health, agent status, cost, or why an agent is not responding."
@@ -704,6 +729,15 @@ library:
     - name: github-org-migration
       description: "Move a GitHub repository between owners (personal to org, consultancy to client, org to org) without leaking it or breaking references."
       source: ~/.claude/skills/github-org-migration/SKILL.md
+
+    # ── Reconciliation 2026-10-01 (installed, previously uncatalogued) ───────
+    - name: planf3
+      description: Concise engineering implementation plan saved to specs/. Fired 2026-09-26.
+      source: ~/dev/external/planf3/.claude/skills/planf3/SKILL.md
+
+    - name: langfuse
+      description: Langfuse tracing, datasets, experiments, eval docs. Installed 2026-09-27, no consumer yet (needs-consumer).
+      source: ~/dev/external/langfuse-skills/skills/langfuse/SKILL.md
 
   agents:
 
