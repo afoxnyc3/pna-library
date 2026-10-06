@@ -70,6 +70,14 @@ library:
       description: Extract clean markdown from web pages using the Defuddle CLI, removing clutter.
       source: ~/.claude/skills/defuddle/skill.md
 
+    - name: deeptutor
+      description: Graph-enhanced RAG tutoring over a document. Builds a knowledge graph from a PDF/textbook/paper, then drives adaptive questioning, quizzing, and citation-backed answers. Adapted from the HKUDS/DeepTutor methodology.
+      source: ~/.claude/skills/deeptutor/SKILL.md
+      upstream: https://github.com/ndpvt-web/deeptutor-claude-skill
+      consumer: agent:deeptutor (~/.claude/agents/deeptutor.md) — the agent shells out to scripts/ in this skill dir
+      requires: [python:networkx]
+      # networkx installed machine-globally into homebrew python 3.14 (PEP-668, --break-system-packages). Not revertible from this repo: see docs/machine-global-installs.md
+
     - name: jobs
       description: Inspect active background research — running processes, scheduled tasks, pending missions.
       source: ~/dev/projects/rnd/skills/feynman/jobs/skill.md
