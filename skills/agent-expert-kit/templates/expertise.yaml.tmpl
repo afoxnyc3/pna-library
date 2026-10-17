@@ -1,0 +1,52 @@
+# Domain expertise: $DOMAIN
+# Description:     $DESCRIPTION
+# Scope seeded:    $SCOPE_FILES
+# Generated:       $GENERATED_DATE
+# MAX_LINES:       1000
+
+overview:
+  domain: "$DOMAIN"
+  description: "$DESCRIPTION"
+  # Seeder: expand with 2-4 bullets on purpose, tech choices, and operating context.
+  # Each bullet that references a tool, framework, or system must cite a source file.
+  # Example:
+  #   - "SQLite-backed task queue for async mission dispatch (file: src/db.ts)"
+  purpose: ""
+  tech_stack: []
+  # Seeder: list the primary entry points — CLI commands, HTTP routes, exported functions.
+  # Format: "<name>: <what it does> (file: <path>)"
+  key_entry_points: []
+
+core_implementation:
+  # Seeder: one entry per key file found in scope.
+  # For each file, document: purpose, dominant patterns, and 3-5 named functions/classes.
+  # Every function citation must include the file path.
+  # Omit test files and generated files unless they reveal critical patterns.
+  #
+  # Schema:
+  #   <file_slug>:
+  #     file: <relative path>
+  #     purpose: <one sentence>
+  #     patterns: [<pattern1>, <pattern2>]
+  #     key_functions:
+  #       - "<function_name>: <what it does> (line: <N>)"
+  #
+  # Example:
+  #   mission_cli:
+  #     file: src/mission-cli.ts
+  #     purpose: CLI entrypoint for creating, listing, and resolving mission tasks.
+  #     patterns: ["arg parsing via process.argv", "switch on command token"]
+  #     key_functions:
+  #       - "createMissionTask: inserts row, returns 8-char hex id (line: 78)"
+  #       - "getMissionTask: fetch by id, returns null if not found (line: 92)"
+
+$CONDITIONAL_SECTION:
+  # Seeder: replace $CONDITIONAL_SECTION with the best-fit section name:
+  #   key_operations    — primary surface is function calls (e.g. service layer)
+  #   schema_structure  — primary surface is data models / DB tables
+  #   api_surface       — HTTP / RPC surface
+  #   event_flow        — event-driven or queue-based systems
+  #   command_surface   — CLI tools
+  #
+  # Document 8-12 items, each with a source citation.
+  # Prefer items that an agent would need to answer "how do I do X" questions.
